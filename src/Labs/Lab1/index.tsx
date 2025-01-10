@@ -291,6 +291,9 @@ export default function Lab1() {
         </a>
         to get dummy text
         <br />
+        <a href="https://github.com/AngelaZQ1/kambaz" id="wd-github">
+          Github
+        </a>
       </div>
     </div>
   );
