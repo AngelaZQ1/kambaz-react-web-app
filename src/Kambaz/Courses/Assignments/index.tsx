@@ -14,10 +14,35 @@ export default function Assignments() {
             className="wd-assignment-link"
           >
             A1 - ENV + HTML
-          </a>{" "}
+          </a>
+          <p>
+            Multiple Modules | Not available until May 6 at 12:00am | Due May 13
+            at 11:59pm | 100 pts
+          </p>
         </li>
         <li className="wd-assignment-list-item">
-          {/* Complete On Your Own */}
+          <a
+            href="#/Kambaz/Courses/1234/Assignments/123"
+            className="wd-assignment-link"
+          >
+            A2 - CSS + BOOTSTRAP
+          </a>
+          <p>
+            Multiple Modules | Not available until May 13 at 12:00am | Due May
+            20 at 11:59pm | 100 pts
+          </p>
+        </li>
+        <li className="wd-assignment-list-item">
+          <a
+            href="#/Kambaz/Courses/1234/Assignments/123"
+            className="wd-assignment-link"
+          >
+            A3 - JAVASCRIPT + REACT
+          </a>
+          <p>
+            Multiple Modules | Not available until May 20 at 12:00am | Due May
+            27 at 11:59pm | 100 pts
+          </p>
         </li>
       </ul>
     </div>
