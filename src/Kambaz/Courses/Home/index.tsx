@@ -1,4 +1,4 @@
-import Modules from "../Modules/Index";
+import Modules from "../Modules";
 import CourseStatus from "./Status";
 export default function Home() {
   return (

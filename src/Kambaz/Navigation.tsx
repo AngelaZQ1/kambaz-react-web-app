@@ -1,37 +1,33 @@
 import { Link } from "react-router-dom";
-export default function CourseNavigation() {
+export default function KambazNavigation() {
   return (
-    <div id="wd-courses-navigation">
-      <Link to="/Kambaz/Courses/1234/Home" id="wd-course-home-link">
-        Home
+    <div id="wd-kambaz-navigation">
+      <a href="https://www.northeastern.edu/" id="wd-neu-link" target="_blank">
+        Northeastern
+      </a>
+      <br />
+      <Link to="/Kambaz/Account" id="wd-account-link">
+        Account
       </Link>
       <br />
-      <Link to="/Kambaz/Courses/1234/Modules" id="wd-course-modules-link">
-        Modules
+      <Link to="/Kambaz/Dashboard" id="wd-dashboard-link">
+        Dashboard
       </Link>
       <br />
-      <Link to="/Kambaz/Courses/1234/Piazza" id="wd-course-piazza-link">
-        Piazza
+      <Link to="/Kambaz/Dashboard" id="wd-course-link">
+        Courses
       </Link>
       <br />
-      <Link to="/Kambaz/Courses/1234/Zoom" id="wd-course-zoom-link">
-        Zoom
+      <Link to="/Kambaz/Calendar" id="wd-calendar-link">
+        Calendar
       </Link>
       <br />
-      <Link to="/Kambaz/Courses/1234/Assignments" id="wd-course-quizzes-link">
-        Assignments
+      <Link to="/Kambaz/Inbox" id="wd-inbox-link">
+        Inbox
       </Link>
       <br />
-      <Link to="/Kambaz/Courses/1234/Quizzes" id="wd-course-assignments-link">
-        Quizzes
-      </Link>
-      <br />
-      <Link to="/Kambaz/Courses/1234/Grades" id="wd-course-grades-link">
-        Grades
-      </Link>
-      <br />
-      <Link to="/Kambaz/People" id="wd-course-people-link">
-        People
+      <Link to="/Labs" id="wd-labs-link">
+        Labs
       </Link>
       <br />
     </div>
