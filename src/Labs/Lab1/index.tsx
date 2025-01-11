@@ -245,13 +245,11 @@ export default function Lab1() {
           <br />
           <select multiple id="wd-select-many-genre">
             <option value="COMEDY" selected>
-              {" "}
-              Comedy{" "}
+              Comedy
             </option>
             <option value="DRAMA"> Drama </option>
             <option value="SCIFI" selected>
-              {" "}
-              Science Fiction{" "}
+              Science Fiction
             </option>
             <option value="FANTASY"> Fantasy </option>
           </select>
