@@ -3,13 +3,13 @@ export default function Profile() {
   return (
     <div id="wd-profile-screen">
       <h3>Profile</h3>
-      <input defaultValue="alice" placeholder="username" class="wd-username" />
+      <input defaultValue="alice" placeholder="username" id="wd-username" />
       <br />
       <input
         defaultValue="123"
         placeholder="password"
         type="password"
-        class="wd-password"
+        id="wd-password"
       />
       <br />
       <input defaultValue="Alice" placeholder="First Name" id="wd-firstname" />
