@@ -59,7 +59,7 @@ export default function CourseNavigation() {
       </Link>
       <br />
       <Link
-        to="/Kambaz/People"
+        to="/Kambaz/Courses/:cid/People"
         id="wd-course-people-link"
         className="list-group-item active border border-0"
       >
