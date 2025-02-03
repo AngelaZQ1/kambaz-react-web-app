@@ -16,7 +16,7 @@ export default function Courses() {
       <div className="d-flex">
         <div className="d-none d-md-block">
           <CourseNavigation />
-        </div>{" "}
+        </div>
         <div className="flex-fill">
           <Routes>
             <Route path="/" element={<Navigate to="Home" />} />

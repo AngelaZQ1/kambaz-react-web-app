@@ -6,7 +6,6 @@ export default function Home() {
       <div className="flex-fill me-3">
         <Modules />
       </div>
-      <CourseStatus />{" "}
       <div className="d-none d-xl-block">
         <CourseStatus />
       </div>
