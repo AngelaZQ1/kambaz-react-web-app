@@ -34,3 +34,8 @@ body * {
 .wd-assignment-list-item {
   border-left: 3px solid green !important;
 }
+
+#wd-description {
+  width: 100%;
+  height: 200px;
+}
