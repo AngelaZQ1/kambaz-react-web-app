@@ -13,7 +13,7 @@ export default function CourseStatus() {
 
       <div className="d-flex">
         <div className="w-50 pe-1">
-          <Button variant="secondary" size="lg" className="w-100 text-nowrap ">
+          <Button variant="secondary" size="lg" className="w-100 text-nowrap">
             <MdDoNotDisturbAlt className="me-2 fs-5" /> Unpublish
           </Button>
         </div>

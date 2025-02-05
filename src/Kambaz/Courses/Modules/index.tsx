@@ -14,8 +14,10 @@ export default function Modules() {
       <br />
       <ListGroup className="rounded-0" id="wd-modules">
         <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
-          <BsGripVertical className="wd-title p-3 ps-2 bg-secondary" />
-          Week 1<ModuleControlButtons />
+          <div className="wd-title p-3 ps-2 bg-secondary">
+            <BsGripVertical className="m-2 fs-3" />
+            Week 1<ModuleControlButtons />
+          </div>
           <ListGroup className="wd-lessons rounded-0">
             <ListGroup.Item className="wd-lesson p-3 ps-1">
               <BsGripVertical className="me-2 fs-3" />
@@ -34,8 +36,10 @@ export default function Modules() {
           </ListGroup>
         </ListGroup.Item>
         <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
-          <BsGripVertical className="wd-title p-3 ps-2 bg-secondary" />
-          Week 2<ModuleControlButtons />
+          <div className="wd-title p-3 ps-2 bg-secondary">
+            <BsGripVertical className="m-2 fs-3" />
+            Week 2<ModuleControlButtons />
+          </div>
           <ListGroup className="wd-lessons rounded-0">
             <ListGroup.Item className="wd-lesson p-3 ps-1">
               <BsGripVertical className="me-2 fs-3" />
@@ -48,8 +52,20 @@ export default function Modules() {
           </ListGroup>
         </ListGroup.Item>
         <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
-          <BsGripVertical className="wd-title p-3 ps-2 bg-secondary" />
-          Week 3<ModuleControlButtons />
+          <div className="wd-title p-3 ps-2 bg-secondary">
+            <BsGripVertical className="m-2 fs-3" />
+            Week 3<ModuleControlButtons />
+          </div>
+          <ListGroup className="wd-lessons rounded-0">
+            <ListGroup.Item className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              LESSON 1 <LessonControlButtons />
+            </ListGroup.Item>
+            <ListGroup.Item className="wd-lesson p-3 ps-1">
+              <BsGripVertical className="me-2 fs-3" />
+              LESSON 2 <LessonControlButtons />
+            </ListGroup.Item>
+          </ListGroup>
         </ListGroup.Item>
       </ListGroup>
     </div>

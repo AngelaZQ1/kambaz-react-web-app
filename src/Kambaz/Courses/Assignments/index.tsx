@@ -1,50 +1,124 @@
+import { Button, ListGroup } from "react-bootstrap";
+import { BiPlus, BiSearch, BiSolidDownArrow } from "react-icons/bi";
+import { BsGripVertical } from "react-icons/bs";
+import LessonControlButtons from "../Modules/LessonControlButtons";
+import { IoEllipsisVertical } from "react-icons/io5";
+import { MdEditDocument } from "react-icons/md";
+
 export default function Assignments() {
   return (
     <div id="wd-assignments">
-      <input placeholder="Search for Assignments" id="wd-search-assignment" />
-      <button id="wd-add-assignment-group">+ Group</button>
-      <button id="wd-add-assignment">+ Assignment</button>
-      <h3 id="wd-assignments-title">
-        ASSIGNMENTS 40% of Total <button>+</button>{" "}
-      </h3>
-      <ul id="wd-assignment-list">
-        <li className="wd-assignment-list-item">
-          <a
-            href="#/Kambaz/Courses/1234/Assignments/123"
-            className="wd-assignment-link"
+      <div
+        id="wd-assignments"
+        className="d-flex justify-content-between align-items-center"
+      >
+        <div className="input-group w-auto">
+          <span className="input-group-text">
+            <BiSearch />
+          </span>
+          <input
+            placeholder="Search..."
+            id="wd-search-assignment"
+            className="form-control"
+          />
+        </div>
+        <div>
+          <Button
+            variant="secondary"
+            id="wd-add-assignment-group"
+            className="me-1"
           >
-            A1 - ENV + HTML
-          </a>
-          <p>
-            Multiple Modules | Not available until May 6 at 12:00am | Due May 13
-            at 11:59pm | 100 pts
-          </p>
-        </li>
-        <li className="wd-assignment-list-item">
-          <a
-            href="#/Kambaz/Courses/1234/Assignments/123"
-            className="wd-assignment-link"
-          >
-            A2 - CSS + BOOTSTRAP
-          </a>
-          <p>
-            Multiple Modules | Not available until May 13 at 12:00am | Due May
-            20 at 11:59pm | 100 pts
-          </p>
-        </li>
-        <li className="wd-assignment-list-item">
-          <a
-            href="#/Kambaz/Courses/1234/Assignments/123"
-            className="wd-assignment-link"
-          >
-            A3 - JAVASCRIPT + REACT
-          </a>
-          <p>
-            Multiple Modules | Not available until May 20 at 12:00am | Due May
-            27 at 11:59pm | 100 pts
-          </p>
-        </li>
-      </ul>
+            <BiPlus />
+            Group
+          </Button>
+          <Button variant="danger" id="wd-add-assignment">
+            <BiPlus />
+            Assignment
+          </Button>
+        </div>
+      </div>
+
+      <div className="wd-title p-3 ps-2 bg-secondary mt-3">
+        <h3 id="wd-assignments-title">
+          <BsGripVertical className="fs-3" />
+          <BiSolidDownArrow className="m-2 fs-6" />
+          ASSIGNMENTS
+          <span className="float-end">
+            <span className="fs-5">40% of Total</span>
+            <BiPlus className="m-2" />
+            <IoEllipsisVertical className="fs-4" />
+          </span>
+        </h3>
+      </div>
+      <ListGroup className="rounded-0" id="wd-assignment-list">
+        <ListGroup.Item className="wd-assignment-list-item p-0 fs-5 border-gray d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center">
+            <BsGripVertical className="fs-3" />
+            <MdEditDocument color="green" className="fs-3 mx-3" />
+            <div className="mt-3">
+              <a
+                href="#/Kambaz/Courses/1234/Assignments/123"
+                className="wd-assignment-link fs-4 fw-bold text-decoration-none wd-fg-color-black"
+              >
+                A1
+              </a>
+              <p>
+                <span className="wd-fg-color-red">Multiple Modules </span>|
+                <b> Not available until</b> May 6 at 12:00am | <b>Due</b> May 13
+                at 11:59pm | 100 pts
+              </p>
+            </div>
+          </div>
+          <span className="flex-shrink-0">
+            <LessonControlButtons />
+          </span>
+        </ListGroup.Item>
+        <ListGroup.Item className="wd-assignment-list-item p-0 fs-5 border-gray d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center">
+            <BsGripVertical className="fs-3" />
+            <MdEditDocument color="green" className="fs-3 mx-3" />
+            <div className="mt-3">
+              <a
+                href="#/Kambaz/Courses/1234/Assignments/123"
+                className="wd-assignment-link fs-4 fw-bold text-decoration-none wd-fg-color-black"
+              >
+                A2
+              </a>
+              <p>
+                <span className="wd-fg-color-red">Multiple Modules </span>|
+                <b> Not available until</b> May 13 at 12:00am | <b>Due</b> May
+                20 at 11:59pm | 100 pts
+              </p>
+            </div>
+          </div>
+          <span className="flex-shrink-0">
+            <LessonControlButtons />
+          </span>
+        </ListGroup.Item>
+        <ListGroup.Item className="wd-assignment-list-item p-0 fs-5 border-gray d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center">
+            <BsGripVertical className="fs-3" />
+            <MdEditDocument color="green" className="fs-3 mx-3" />
+
+            <div className="mt-3">
+              <a
+                href="#/Kambaz/Courses/1234/Assignments/123"
+                className="wd-assignment-link fs-4 fw-bold text-decoration-none wd-fg-color-black"
+              >
+                A3
+              </a>
+              <p>
+                <span className="wd-fg-color-red">Multiple Modules </span>|
+                <b> Not available until</b> May 20 at 12:00am | <b>Due</b> May
+                27 at 11:59pm | 100 pts
+              </p>
+            </div>
+          </div>
+          <span className="flex-shrink-0">
+            <LessonControlButtons />
+          </span>
+        </ListGroup.Item>
+      </ListGroup>
     </div>
   );
 }
