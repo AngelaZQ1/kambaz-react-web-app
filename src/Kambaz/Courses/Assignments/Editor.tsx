@@ -15,7 +15,7 @@ export default function AssignmentEditor() {
         className="d-flex flex-column align-items-end w-75"
       >
         <Form.Label>Assignment Name</Form.Label>
-        <Form.Control placeholder={assignment.title} />
+        <Form.Control placeholder={assignment?.title} />
         <textarea id="wd-description" className="mt-3">
           The assignment is available online Submit a link to the landing page
           of your Web application running on Netlify. The landing page should

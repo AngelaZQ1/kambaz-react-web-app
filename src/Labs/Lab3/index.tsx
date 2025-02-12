@@ -13,7 +13,7 @@ import FindFunction from "./FindFunction";
 import FindIndex from "./FindIndex";
 import ForLoops from "./ForLoops";
 import FunctionDestructing from "./FunctionDestructuring";
-import Highlight from "./HighLight";
+import Highlight from "./Highlight";
 import House from "./House";
 import IfElse from "./IfElse";
 import ImpliedReturn from "./ImpliedReturn";
