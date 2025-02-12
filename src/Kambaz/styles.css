@@ -12,10 +12,14 @@ body * {
   }
 }
 
-.list-group.wd > .list-group-item.active {
+div#wd-courses-navigation .list-group-item {
+  color: red;
+}
+
+div#wd-courses-navigation .active {
   color: black;
   background-color: white;
-  border-left: 3px solid black !important;
+  border-left: 4px solid !important;
 }
 
 .btn-secondary {
