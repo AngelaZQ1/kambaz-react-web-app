@@ -16,10 +16,11 @@ div#wd-courses-navigation .list-group-item {
   color: red;
 }
 
-div#wd-courses-navigation .active {
+div#wd-courses-navigation .list-group-item.active,
+.list-group.wd > .list-group-item.active {
   color: black;
   background-color: white;
-  border-left: 4px solid !important;
+  border-left: 3px solid !important;
 }
 
 .btn-secondary {
