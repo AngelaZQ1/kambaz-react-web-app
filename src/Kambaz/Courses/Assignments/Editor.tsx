@@ -17,12 +17,7 @@ export default function AssignmentEditor() {
         <Form.Label>Assignment Name</Form.Label>
         <Form.Control placeholder={assignment?.title} />
         <textarea id="wd-description" className="mt-3">
-          The assignment is available online Submit a link to the landing page
-          of your Web application running on Netlify. The landing page should
-          include the following: - Your full name and section - Links to each of
-          the lab assignments - Link to the Kanbas application - Links to all
-          relevant source code repositories The Kanbas application should
-          include a link to navigate back to the landing page.
+          {assignment?.description}
         </textarea>
         <br />
         <div className="w-75">
@@ -31,7 +26,11 @@ export default function AssignmentEditor() {
             className="mt-3 d-flex justify-content-end gap-2 align-items-center"
           >
             <Form.Label className="">Points</Form.Label>
-            <Form.Control type="number" className="w-100" />
+            <Form.Control
+              type="number"
+              className="w-100"
+              value={assignment?.points}
+            />
           </Form.Group>
           <Form.Group
             controlId="wd-group"
@@ -108,14 +107,18 @@ export default function AssignmentEditor() {
             <Form.Label className="me-2">
               <b>Due</b>
             </Form.Label>
-            <Form.Control type="date" className="w-100" />
+            <Form.Control
+              type="date"
+              className="w-100"
+              value={assignment?.due_date}
+            />
           </Form.Group>
           <Form.Group className="mt-3 d-flex justify-content-end gap-2 align-items-center">
             <div className="me-3">
               <Form.Label className="me-2">
                 <b>Available From</b>
               </Form.Label>
-              <Form.Control type="date" />
+              <Form.Control type="date" value={assignment?.available_date} />
             </div>
             <div>
               <Form.Label className="me-2">
