@@ -4,7 +4,6 @@ import Account from "./Account";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Courses from "./Courses";
 import Dashboard from "./Dashboard";
-import { courses } from "./Database";
 import KambazNavigation from "./Navigation";
 import "./styles.css";
 
@@ -38,7 +37,7 @@ export default function Kambaz() {
             path="Courses/:cid/*"
             element={
               <ProtectedRoute>
-                <Courses courses={courses} />
+                <Courses />
               </ProtectedRoute>
             }
           />
