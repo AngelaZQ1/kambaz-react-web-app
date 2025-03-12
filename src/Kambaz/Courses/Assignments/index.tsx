@@ -6,12 +6,15 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import { MdEditDocument } from "react-icons/md";
 import * as db from "../../Database";
 import { useParams } from "react-router";
+import { useSelector } from "react-redux";
 
 export default function Assignments() {
   const { cid } = useParams();
   const assignments = db.assignments.filter(
     (assignment) => assignment.course === cid
   );
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+
   return (
     <div id="wd-assignments">
       <div
@@ -28,20 +31,22 @@ export default function Assignments() {
             className="form-control"
           />
         </div>
-        <div>
-          <Button
-            variant="secondary"
-            id="wd-add-assignment-group"
-            className="me-1"
-          >
-            <BiPlus />
-            Group
-          </Button>
-          <Button variant="danger" id="wd-add-assignment">
-            <BiPlus />
-            Assignment
-          </Button>
-        </div>
+        {currentUser.role === "FACULTY" && (
+          <div>
+            <Button
+              variant="secondary"
+              id="wd-add-assignment-group"
+              className="me-1"
+            >
+              <BiPlus />
+              Group
+            </Button>
+            <Button variant="danger" id="wd-add-assignment">
+              <BiPlus />
+              Assignment
+            </Button>
+          </div>
+        )}
       </div>
 
       <div className="wd-title p-3 ps-2 bg-secondary mt-3">
