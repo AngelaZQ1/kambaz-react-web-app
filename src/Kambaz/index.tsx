@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from "react-router";
 import Account from "./Account";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Courses from "./Courses";
-import { addCourse, deleteCourse, updateCourse } from "./Courses/reducer";
 import Dashboard from "./Dashboard";
 import { courses } from "./Database";
 import KambazNavigation from "./Navigation";
@@ -31,14 +30,7 @@ export default function Kambaz() {
             path="Dashboard"
             element={
               <ProtectedRoute>
-                <Dashboard
-                  courses={courses}
-                  course={course}
-                  setCourse={setCourse}
-                  addNewCourse={addCourse}
-                  deleteCourse={deleteCourse}
-                  updateCourse={updateCourse}
-                />
+                <Dashboard course={course} setCourse={setCourse} />
               </ProtectedRoute>
             }
           />
