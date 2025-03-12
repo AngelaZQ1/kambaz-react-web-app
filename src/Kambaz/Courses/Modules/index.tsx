@@ -1,12 +1,12 @@
-import { FormControl, ListGroup } from "react-bootstrap";
-import ModulesControls from "./ModulesControls";
-import { BsGripVertical } from "react-icons/bs";
-import ModuleControlButtons from "./ModuleControlButtons";
-import LessonControlButtons from "./LessonControlButtons";
-import { useParams } from "react-router";
 import { useState } from "react";
+import { FormControl, ListGroup } from "react-bootstrap";
+import { BsGripVertical } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { addModule, updateModule, deleteModule, editModule } from "./reducer";
+import { useParams } from "react-router";
+import LessonControlButtons from "./LessonControlButtons";
+import ModuleControlButtons from "./ModuleControlButtons";
+import ModulesControls from "./ModulesControls";
+import { addModule, deleteModule, editModule, updateModule } from "./reducer";
 
 export default function Modules() {
   const { cid } = useParams();
@@ -17,14 +17,16 @@ export default function Modules() {
 
   return (
     <div>
-      <ModulesControls
-        setModuleName={setModuleName}
-        moduleName={moduleName}
-        addModule={() => {
-          dispatch(addModule({ name: moduleName, course: cid }));
-          setModuleName("");
-        }}
-      />
+      {currentUser.role === "FACULTY" && (
+        <ModulesControls
+          setModuleName={setModuleName}
+          moduleName={moduleName}
+          addModule={() => {
+            dispatch(addModule({ name: moduleName, course: cid }));
+            setModuleName("");
+          }}
+        />
+      )}
       <br />
       <br />
       <br />

@@ -1,17 +1,15 @@
-import { Routes, Route, Navigate } from "react-router";
-import Account from "./Account";
-import Dashboard from "./Dashboard";
-import KambazNavigation from "./Navigation";
-import Courses from "./Courses";
-import "./styles.css";
-import * as db from "./Database";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { courses } from "../Database";
+import { Navigate, Route, Routes } from "react-router";
+import Account from "./Account";
 import ProtectedRoute from "./Account/ProtectedRoute";
+import Courses from "./Courses";
+import { addCourse, deleteCourse, updateCourse } from "./Courses/reducer";
+import Dashboard from "./Dashboard";
+import { courses } from "./Database";
+import KambazNavigation from "./Navigation";
+import "./styles.css";
 
 export default function Kambaz() {
-  const [courses, setCourses] = useState<any[]>(db.courses);
   const [course, setCourse] = useState<any>({
     _id: "0",
     name: "New Course",
@@ -21,25 +19,6 @@ export default function Kambaz() {
     image: "/images/reactjs.jpg",
     description: "New Description",
   });
-
-  const addNewCourse = () => {
-    const newCourse = { ...course, _id: uuidv4() };
-    setCourses([...courses, newCourse]);
-  };
-  const deleteCourse = (courseId: string) => {
-    setCourses(courses.filter((course) => course._id !== courseId));
-  };
-  const updateCourse = () => {
-    setCourses(
-      courses.map((c) => {
-        if (c._id === course._id) {
-          return course;
-        } else {
-          return c;
-        }
-      })
-    );
-  };
 
   return (
     <div id="wd-kambaz">
@@ -56,7 +35,7 @@ export default function Kambaz() {
                   courses={courses}
                   course={course}
                   setCourse={setCourse}
-                  addNewCourse={addNewCourse}
+                  addNewCourse={addCourse}
                   deleteCourse={deleteCourse}
                   updateCourse={updateCourse}
                 />

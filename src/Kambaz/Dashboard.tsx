@@ -1,22 +1,15 @@
-import { Link } from "react-router-dom";
 import { Button, Card, Col, FormControl, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { addCourse, deleteCourse, updateCourse } from "./Courses/reducer";
 import * as db from "./Database";
 
 export default function Dashboard({
-  courses,
   course,
   setCourse,
-  addNewCourse,
-  deleteCourse,
-  updateCourse,
 }: {
-  courses: any[];
   course: any;
   setCourse: (course: any) => void;
-  addNewCourse: () => void;
-  deleteCourse: (course: any) => void;
-  updateCourse: () => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { enrollments } = db;
@@ -31,7 +24,7 @@ export default function Dashboard({
             <button
               className="btn btn-primary float-end"
               id="wd-add-new-course-click"
-              onClick={addNewCourse}
+              onClick={addCourse}
             >
               Add
             </button>
@@ -57,11 +50,13 @@ export default function Dashboard({
           />
         </>
       )}
-      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
+      <h2 id="wd-dashboard-published">
+        Published Courses ({db.courses.length})
+      </h2>
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {courses
+          {db.courses
             .filter((course) =>
               enrollments.some(
                 (enrollment) =>
