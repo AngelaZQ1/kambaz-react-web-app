@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { ListGroup } from "react-bootstrap";
 export default function ArrayStateVariable() {
   const [array, setArray] = useState([1, 2, 3, 4, 5]);
   const addElement = () => {
@@ -10,16 +11,25 @@ export default function ArrayStateVariable() {
   return (
     <div id="wd-array-state-variables">
       <h2>Array State Variable</h2>
-      <button onClick={addElement}>Add Element</button>
-      <ul>
+      <button
+        onClick={addElement}
+        className="bg-success btn text-white border-0 m-1"
+      >
+        Add Element
+      </button>
+      <ListGroup>
         {array.map((item, index) => (
-          <li key={index}>
-            {" "}
+          <ListGroup.Item key={index} className="w-25">
             {item}
-            <button onClick={() => deleteElement(index)}>Delete</button>
-          </li>
+            <button
+              onClick={() => deleteElement(index)}
+              className="bg-danger btn text-white border-0 ms-5"
+            >
+              Delete
+            </button>
+          </ListGroup.Item>
         ))}
-      </ul>
+      </ListGroup>
       <hr />
     </div>
   );
