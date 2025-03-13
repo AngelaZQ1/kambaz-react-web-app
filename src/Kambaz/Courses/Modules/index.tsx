@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { FormControl, ListGroup } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
@@ -70,15 +71,17 @@ export default function Modules() {
               </div>
               {module.lessons && (
                 <ListGroup className="wd-lessons rounded-0">
-                  {module.lessons.map((lesson) => (
-                    <ListGroup.Item
-                      key={lesson._id}
-                      className="wd-lesson p-3 ps-1"
-                    >
-                      <BsGripVertical className="me-2 fs-3" /> {lesson.name}
-                      <LessonControlButtons />
-                    </ListGroup.Item>
-                  ))}
+                  {module.lessons.map(
+                    (lesson: { _id: string; name: string }) => (
+                      <ListGroup.Item
+                        key={lesson._id}
+                        className="wd-lesson p-3 ps-1"
+                      >
+                        <BsGripVertical className="me-2 fs-3" /> {lesson.name}
+                        <LessonControlButtons />
+                      </ListGroup.Item>
+                    )
+                  )}
                 </ListGroup>
               )}
             </ListGroup.Item>
