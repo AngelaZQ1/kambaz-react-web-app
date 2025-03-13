@@ -1,4 +1,12 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  SetStateAction,
+  useState,
+} from "react";
 import { Button, ListGroup, Modal } from "react-bootstrap";
 import { BiPlus, BiSearch, BiSolidDownArrow } from "react-icons/bi";
 import { BsGripVertical } from "react-icons/bs";
@@ -79,38 +87,51 @@ export default function Assignments() {
       </div>
       <ListGroup className="rounded-0" id="wd-assignment-list">
         {assignments
-          .filter((a) => a.course === cid)
-          .map((assignment) => (
-            <ListGroup.Item className="wd-assignment-list-item p-0 fs-5 border-gray d-flex align-items-center justify-content-between">
-              <div className="d-flex align-items-center">
-                <BsGripVertical className="fs-3" />
-                <MdEditDocument color="green" className="fs-3 mx-3" />
-                <div className="mt-3">
-                  <a
-                    href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
-                    className="wd-assignment-link fs-4 fw-bold text-decoration-none wd-fg-color-black"
-                  >
-                    {assignment.title}
-                  </a>
-                  <p>
-                    <span className="wd-fg-color-red">Multiple Modules </span>|
-                    <b> Not available until</b> May 6 at 12:00am | <b>Due</b>{" "}
-                    May 13 at 11:59pm | 100 pts
-                  </p>
+          .filter((a: { course: string | undefined }) => a.course === cid)
+          .map(
+            (assignment: {
+              _id: SetStateAction<string | null>;
+              title:
+                | string
+                | number
+                | boolean
+                | ReactElement<any, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | null
+                | undefined;
+            }) => (
+              <ListGroup.Item className="wd-assignment-list-item p-0 fs-5 border-gray d-flex align-items-center justify-content-between">
+                <div className="d-flex align-items-center">
+                  <BsGripVertical className="fs-3" />
+                  <MdEditDocument color="green" className="fs-3 mx-3" />
+                  <div className="mt-3">
+                    <a
+                      href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                      className="wd-assignment-link fs-4 fw-bold text-decoration-none wd-fg-color-black"
+                    >
+                      {assignment.title}
+                    </a>
+                    <p>
+                      <span className="wd-fg-color-red">Multiple Modules </span>
+                      |<b> Not available until</b> May 6 at 12:00am | <b>Due</b>{" "}
+                      May 13 at 11:59pm | 100 pts
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <span className="flex-shrink-0">
-                <LessonControlButtons />
-                <FaTrash
-                  className="text-danger me-2 mb-1"
-                  onClick={() => {
-                    setShowModal(true);
-                    setSelectedAssignmentId(assignment._id);
-                  }}
-                />
-              </span>
-            </ListGroup.Item>
-          ))}
+                <span className="flex-shrink-0">
+                  <LessonControlButtons />
+                  <FaTrash
+                    className="text-danger me-2 mb-1"
+                    onClick={() => {
+                      setShowModal(true);
+                      setSelectedAssignmentId(assignment._id);
+                    }}
+                  />
+                </span>
+              </ListGroup.Item>
+            )
+          )}
       </ListGroup>
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>

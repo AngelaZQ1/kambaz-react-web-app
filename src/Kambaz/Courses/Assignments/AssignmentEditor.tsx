@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +11,9 @@ export default function AssignmentEditor() {
 
   const dispatch = useDispatch();
   const [assignment, setAssignment] = useState(
-    assignments.find((assignment) => assignment._id === aid)
+    assignments.find(
+      (assignment: { _id: string | undefined }) => assignment._id === aid
+    )
   );
 
   const handleSave = () => {

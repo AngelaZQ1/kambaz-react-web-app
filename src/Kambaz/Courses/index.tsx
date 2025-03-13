@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FaAlignJustify } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Navigate, Route, Routes, useLocation, useParams } from "react-router";
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/AssignmentEditor";
@@ -6,12 +8,13 @@ import Home from "./Home";
 import Modules from "./Modules";
 import CourseNavigation from "./Navigation";
 import PeopleTable from "./People/Table";
-import { useSelector } from "react-redux";
 
 export default function Courses() {
   const { cid } = useParams();
   const { courses } = useSelector((state: any) => state.coursesReducer);
-  const course = courses.find((course) => course._id === cid);
+  const course = courses.find(
+    (course: { _id: string | undefined }) => course._id === cid
+  );
   const { pathname } = useLocation();
 
   return (
