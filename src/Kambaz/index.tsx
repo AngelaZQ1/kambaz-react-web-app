@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import Account from "./Account";
