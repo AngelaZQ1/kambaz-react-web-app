@@ -22,7 +22,7 @@ export const updateAssignment = async (assignment: any) => {
   );
   return data;
 };
-// export const deleteAssignment = async (module: any) => {
-//   const { data } = await axios.put(`${ASSIGNMENTS_API}/${module._id}`, module);
-//   return data;
-// };
+export const deleteAssignment = async (assignmentId: any) => {
+  const { data } = await axios.delete(`${ASSIGNMENTS_API}/${assignmentId}`);
+  return data;
+};

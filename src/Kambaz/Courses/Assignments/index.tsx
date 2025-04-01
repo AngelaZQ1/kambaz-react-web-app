@@ -30,7 +30,8 @@ export default function Assignments() {
     null | string
   >(null);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    await assignmentsClient.deleteAssignment(selectedAssignmentId as string);
     dispatch(deleteAssignment(selectedAssignmentId));
     setShowModal(false);
   };
