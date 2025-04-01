@@ -5,6 +5,7 @@ import {
   ReactNode,
   ReactPortal,
   SetStateAction,
+  useEffect,
   useState,
 } from "react";
 import { Button, ListGroup, Modal } from "react-bootstrap";
@@ -16,7 +17,8 @@ import { MdEditDocument } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import LessonControlButtons from "../Modules/LessonControlButtons";
-import { deleteAssignment } from "./reducer";
+import * as assignmentsClient from "./client";
+import { deleteAssignment, setAssignments } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -32,6 +34,14 @@ export default function Assignments() {
     dispatch(deleteAssignment(selectedAssignmentId));
     setShowModal(false);
   };
+
+  const fetchAssignments = async () => {
+    const assignments = await assignmentsClient.getAllAssignments();
+    dispatch(setAssignments(assignments));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
 
   return (
     <div id="wd-assignments">

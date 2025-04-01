@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
+import * as assignmentsClient from "./client";
 import { addAssignment, updateAssignment } from "./reducer";
 
 export default function AssignmentEditor() {
@@ -16,11 +17,16 @@ export default function AssignmentEditor() {
     )
   );
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (assignment.course) {
+      await assignmentsClient.updateAssignment(assignment);
       dispatch(updateAssignment(assignment));
     } else {
-      dispatch(addAssignment({ ...assignment, course: cid }));
+      const newAssignment = await assignmentsClient.createAssignment(
+        assignment,
+        cid as string
+      );
+      dispatch(addAssignment(newAssignment));
     }
     window.history.back();
   };
