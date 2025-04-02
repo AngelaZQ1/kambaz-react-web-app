@@ -43,7 +43,7 @@ export default function Dashboard({
   };
   const fetchCourses = async () => {
     try {
-      const courses = await userClient.findMyCourses();
+      const courses = await courseClient.fetchAllCourses();
       setCourses(courses);
     } catch (error) {
       console.error(error);
@@ -52,6 +52,16 @@ export default function Dashboard({
   useEffect(() => {
     fetchCourses();
   }, [currentUser]);
+
+  let coursesToShow = courses;
+  if (currentUser.role === "STUDENT" && !showAllCourses) {
+    coursesToShow = courses.filter((course: { _id: any }) =>
+      enrollments.some(
+        (e: { user: any; course: any }) =>
+          e.user === currentUser._id && e.course === course._id
+      )
+    );
+  }
 
   return (
     <div id="wd-dashboard">
@@ -105,7 +115,7 @@ export default function Dashboard({
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {courses.map(
+          {coursesToShow.map(
             (course: { _id: string; name: string; description: string }) => (
               <Col className="wd-dashboard-course" style={{ width: "300px" }}>
                 <Card>
