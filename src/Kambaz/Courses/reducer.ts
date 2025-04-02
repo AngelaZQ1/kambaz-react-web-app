@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import { courses } from "../Database";
+
 const initialState = {
-  courses: courses,
+  courses: [],
 };
 const coursesSlice = createSlice({
   name: "courses",
   initialState,
   reducers: {
+    setCourses: (state, action) => {
+      state.courses = action.payload;
+    },
     addCourse: (state, { payload: course }) => {
       const newCourse = { ...course, _id: uuidv4() };
       state.courses = [...state.courses, newCourse] as any;
@@ -23,5 +26,6 @@ const coursesSlice = createSlice({
     },
   },
 });
-export const { addCourse, deleteCourse, updateCourse } = coursesSlice.actions;
+export const { setCourses, addCourse, deleteCourse, updateCourse } =
+  coursesSlice.actions;
 export default coursesSlice.reducer;

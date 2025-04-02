@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router";
 import Account from "./Account";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Courses from "./Courses";
+import * as coursesClient from "./Courses/client";
+import { setCourses } from "./Courses/reducer";
 import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
 import "./styles.css";
 
 export default function Kambaz() {
+  const dispatch = useDispatch();
   const [course, setCourse] = useState<any>({
     _id: "0",
     name: "New Course",
@@ -18,6 +22,15 @@ export default function Kambaz() {
     image: "/images/reactjs.jpg",
     description: "New Description",
   });
+
+  const fetchCourses = async () => {
+    const courses = await coursesClient.fetchAllCourses();
+    dispatch(setCourses(courses));
+  };
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
   return (
     <div id="wd-kambaz">
