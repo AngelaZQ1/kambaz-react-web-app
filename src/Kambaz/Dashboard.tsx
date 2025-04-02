@@ -28,13 +28,17 @@ export default function Dashboard({
   };
   const deleteCourse = async (courseId: string) => {
     await courseClient.deleteCourse(courseId);
-    dispatch(setCourses(courses.filter((course) => course._id !== courseId)));
+    dispatch(
+      setCourses(
+        courses.filter((course: { _id: string }) => course._id !== courseId)
+      )
+    );
   };
   const updateCourse = async () => {
     await courseClient.updateCourse(course);
     dispatch(
       setCourses(
-        courses.map((c) => {
+        courses.map((c: { _id: string }) => {
           if (c._id === course._id) {
             return course;
           } else {

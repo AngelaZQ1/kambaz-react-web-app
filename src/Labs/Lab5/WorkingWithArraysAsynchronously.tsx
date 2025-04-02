@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { FormControl, ListGroup } from "react-bootstrap";
 import { FaPlusCircle, FaTrash } from "react-icons/fa";

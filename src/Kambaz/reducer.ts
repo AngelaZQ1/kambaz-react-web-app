@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 } from "uuid";
 
@@ -22,9 +23,11 @@ const enrollmentsSlice = createSlice({
     },
     unenrollUser: (state, { payload }) => {
       const { userId, courseId } = payload;
-      state.enrollments = state.enrollments.filter((e) => {
-        return !(e.user === userId && e.course === courseId);
-      });
+      state.enrollments = state.enrollments.filter(
+        (e: { user: any; course: any }) => {
+          return !(e.user === userId && e.course === courseId);
+        }
+      );
     },
   },
 });
