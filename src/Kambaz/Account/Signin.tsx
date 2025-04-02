@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button, FormControl } from "react-bootstrap";
 import { useDispatch } from "react-redux";
