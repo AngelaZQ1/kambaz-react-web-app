@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FormControl } from "react-bootstrap";
 import { useParams } from "react-router";
 import PeopleTable from "../Courses/People/Table";
 import * as client from "./client";
@@ -6,6 +7,17 @@ import * as client from "./client";
 export default function Users() {
   const [users, setUsers] = useState<[]>([]);
   const [role, setRole] = useState("");
+  const [name, setName] = useState("");
+  const filterUsersByName = async (name: string) => {
+    setName(name);
+    if (name) {
+      const users = await client.findUsersByPartialName(name);
+      setUsers(users);
+    } else {
+      fetchUsers();
+    }
+  };
+
   const filterUsersByRole = async (role: string) => {
     setRole(role);
     if (role) {
@@ -27,6 +39,12 @@ export default function Users() {
   return (
     <div>
       <h3>Users</h3>
+
+      <FormControl
+        onChange={(e) => filterUsersByName(e.target.value)}
+        placeholder="Search people"
+        className="float-start w-25 me-2 wd-filter-by-name"
+      />
       <select
         value={role}
         onChange={(e) => filterUsersByRole(e.target.value)}
