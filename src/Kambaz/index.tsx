@@ -5,7 +5,7 @@ import { Navigate, Route, Routes } from "react-router";
 import Account from "./Account";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Courses from "./Courses";
-import * as coursesClient from "./Courses/client";
+import * as courseClient from "./Courses/client";
 import { setCourses } from "./Courses/reducer";
 import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
@@ -24,7 +24,7 @@ export default function Kambaz() {
   });
 
   const fetchCourses = async () => {
-    const courses = await coursesClient.fetchAllCourses();
+    const courses = await courseClient.fetchAllCourses();
     dispatch(setCourses(courses));
   };
 

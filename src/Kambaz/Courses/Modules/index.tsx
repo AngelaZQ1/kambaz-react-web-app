@@ -4,7 +4,7 @@ import { FormControl, ListGroup } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import * as coursesClient from "../client";
+import * as courseClient from "../client";
 import * as modulesClient from "./client";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
@@ -25,13 +25,13 @@ export default function Modules() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const fetchModules = async () => {
-    const modules = await coursesClient.findModulesForCourse(cid as string);
+    const modules = await courseClient.findModulesForCourse(cid as string);
     dispatch(setModules(modules));
   };
   const createModuleForCourse = async () => {
     if (!cid) return;
     const newModule = { name: moduleName, course: cid };
-    const module = await coursesClient.createModuleForCourse(cid, newModule);
+    const module = await courseClient.createModuleForCourse(cid, newModule);
     dispatch(addModule(module));
   };
   const removeModule = async (moduleId: string) => {

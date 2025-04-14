@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Button, Card, Col, FormControl, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import * as userClient from "./Account/client";
 import * as enrollmentsClient from "./client";
 import * as courseClient from "./Courses/client";
 import { setCourses } from "./Courses/reducer";
@@ -23,7 +22,7 @@ export default function Dashboard({
   const [showAllCourses, setShowAllCourses] = useState(false);
 
   const addNewCourse = async () => {
-    const newCourse = await userClient.createCourse(course);
+    const newCourse = await courseClient.createCourse(course);
     dispatch(setCourses([...courses, newCourse]));
   };
   const deleteCourse = async (courseId: string) => {
