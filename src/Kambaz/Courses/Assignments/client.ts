@@ -1,28 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-
+const axiosWithCredentials = axios.create({ withCredentials: true });
 const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 const ASSIGNMENTS_API = `${REMOTE_SERVER}/api/assignments`;
 
-export const getAllAssignments = async () => {
-  const response = await axios.get(`${ASSIGNMENTS_API}`);
+export const getAllAssignments = async (courseId: string) => {
+  const response = await axiosWithCredentials.get(
+    `${ASSIGNMENTS_API}/${courseId}`
+  );
   return response.data;
 };
 export const createAssignment = async (assignment: any, courseId: string) => {
-  const response = await axios.post(
+  const response = await axiosWithCredentials.post(
     `${ASSIGNMENTS_API}/${courseId}/assignment`,
     assignment
   );
   return response.data;
 };
 export const updateAssignment = async (assignment: any) => {
-  const { data } = await axios.put(
+  const { data } = await axiosWithCredentials.put(
     `${ASSIGNMENTS_API}/${assignment._id}`,
     assignment
   );
   return data;
 };
 export const deleteAssignment = async (assignmentId: any) => {
-  const { data } = await axios.delete(`${ASSIGNMENTS_API}/${assignmentId}`);
+  const { data } = await axiosWithCredentials.delete(
+    `${ASSIGNMENTS_API}/${assignmentId}`
+  );
   return data;
 };
