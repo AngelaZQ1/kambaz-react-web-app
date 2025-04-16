@@ -54,7 +54,7 @@ export default function Dashboard({
     }
     dispatch(
       setCourses(
-        courses.map((course) => {
+        courses.map((course: any) => {
           if (course._id === courseId) {
             return { ...course, enrolled: enrolled };
           } else {
@@ -152,7 +152,12 @@ export default function Dashboard({
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
           {courses.map(
-            (course: { _id: string; name: string; description: string }) => (
+            (course: {
+              _id: string;
+              name: string;
+              description: string;
+              enrolled: boolean;
+            }) => (
               <Col className="wd-dashboard-course" style={{ width: "300px" }}>
                 <Card>
                   <Link
