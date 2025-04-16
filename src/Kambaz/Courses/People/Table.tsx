@@ -8,16 +8,20 @@ import PeopleDetails from "./Details";
 
 export default function PeopleTable({ users = [] }: { users?: any[] }) {
   const { cid } = useParams();
-  const [fetchedUsers, setFetchedUsers] = useState(users);
+  const [fetchedUsers, setFetchedUsers] = useState([...users]);
 
   const fetchUsers = async () => {
-    if (!cid) return;
-    const users = await client.findUsersForCourse(cid);
-    setFetchedUsers(users);
+    if (users.length > 0) {
+      setFetchedUsers([...users]);
+      return;
+    }
+    const fetched = await client.findUsersForCourse(cid);
+    setFetchedUsers(fetched);
   };
+
   useEffect(() => {
     fetchUsers();
-  }, [cid]);
+  }, [cid, users]);
 
   return (
     <div id="wd-people-table">
