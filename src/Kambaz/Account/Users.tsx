@@ -9,6 +9,7 @@ import * as client from "./client";
 export default function Users() {
   const [users, setUsers] = useState<any[]>([]);
   const [role, setRole] = useState("");
+  const { uid } = useParams();
 
   const createUser = async () => {
     const user = await client.createUser({
@@ -42,11 +43,11 @@ export default function Users() {
     }
   };
 
-  const { uid } = useParams();
   const fetchUsers = async () => {
     const users = await client.findAllUsers();
     setUsers(users);
   };
+
   useEffect(() => {
     fetchUsers();
   }, [uid]);

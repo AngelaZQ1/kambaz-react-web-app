@@ -1,10 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
+import * as client from "../client";
 import PeopleDetails from "./Details";
 
 export default function PeopleTable({ users = [] }: { users?: any[] }) {
+  const { cid } = useParams();
+  const [fetchedUsers, setFetchedUsers] = useState(users);
+
+  const fetchUsers = async () => {
+    if (!cid) return;
+    const users = await client.findUsersForCourse(cid);
+    setFetchedUsers(users);
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, [cid]);
+
   return (
     <div id="wd-people-table">
       <PeopleDetails />
@@ -20,7 +34,7 @@ export default function PeopleTable({ users = [] }: { users?: any[] }) {
           </tr>
         </thead>
         <tbody>
-          {users.map((user: any) => (
+          {fetchedUsers.map((user: any) => (
             <tr key={user._id}>
               <td className="wd-full-name text-nowrap">
                 <Link
