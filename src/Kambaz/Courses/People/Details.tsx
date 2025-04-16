@@ -22,7 +22,6 @@ export default function PeopleDetails() {
   const saveUser = async () => {
     const [firstName, lastName] = name.split(" ");
     const updatedUser = { ...user, firstName, lastName };
-    console.log("updatedUser", updatedUser);
     await client.updateUser(updatedUser);
     setUser(updatedUser);
     setEditingName(false);
@@ -32,11 +31,19 @@ export default function PeopleDetails() {
 
   const [editingEmail, setEditingEmail] = useState(false);
 
-  console.log("user", user.role);
   const fetchUser = async () => {
     if (!uid) return;
     const user = await client.findUserById(uid);
     setUser(user);
+    setName(`${user.firstName} ${user.lastName}`);
+  };
+
+  const handleClose = () => {
+    navigate(-1);
+    setUser({});
+    setEditingName(false);
+    setEditingEmail(false);
+    setName("");
   };
   useEffect(() => {
     if (uid) fetchUser();
@@ -46,7 +53,7 @@ export default function PeopleDetails() {
   return (
     <div className="wd-people-details position-fixed top-0 end-0 bottom-0 bg-white p-4 shadow w-25">
       <button
-        onClick={() => navigate(-1)}
+        onClick={handleClose}
         className="btn position-fixed end-0 top-0 wd-close-details"
       >
         <IoCloseSharp className="fs-1" />
