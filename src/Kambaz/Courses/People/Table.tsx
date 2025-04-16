@@ -15,7 +15,7 @@ export default function PeopleTable({ users = [] }: { users?: any[] }) {
       setFetchedUsers([...users]);
       return;
     }
-    const fetched = await client.findUsersForCourse(cid);
+    const fetched = await client.findUsersForCourse(cid!);
     setFetchedUsers(fetched);
   };
 
