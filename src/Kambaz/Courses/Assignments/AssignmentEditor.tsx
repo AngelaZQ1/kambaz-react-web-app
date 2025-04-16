@@ -23,7 +23,11 @@ export default function AssignmentEditor() {
       dispatch(updateAssignment(assignment));
     } else {
       const newAssignment = await assignmentsClient.createAssignment(
-        assignment,
+        {
+          ...assignment,
+          available_date: new Date(assignment.available_from),
+          due_date: new Date(assignment.due_date),
+        },
         cid as string
       );
       dispatch(addAssignment(newAssignment));
