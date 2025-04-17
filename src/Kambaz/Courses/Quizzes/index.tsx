@@ -54,7 +54,7 @@ export default function Quizzes() {
           <Button
             variant="danger"
             onClick={() =>
-              (window.location.href = `#/Kambaz/Courses/${cid}/Assignments/new`)
+              (window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/new`)
             }
           >
             <BiPlus />
@@ -78,7 +78,9 @@ export default function Quizzes() {
               <MdEditDocument color="green" className="fs-3 mx-3" />
               <div className="mt-3">
                 <a
-                  href={``}
+                  onClick={() =>
+                    (window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)
+                  }
                   className="wd-assignment-link fs-4 fw-bold text-decoration-none wd-fg-color-black"
                 >
                   {quiz.title}
