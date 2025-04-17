@@ -131,16 +131,18 @@ export default function Assignments() {
                     </p>
                   </div>
                 </div>
-                <span className="flex-shrink-0">
-                  <LessonControlButtons />
-                  <FaTrash
-                    className="text-danger me-2 mb-1"
-                    onClick={() => {
-                      setShowModal(true);
-                      setSelectedAssignmentId(assignment._id);
-                    }}
-                  />
-                </span>
+                {currentUser.role === "FACULTY" && (
+                  <span className="flex-shrink-0">
+                    <LessonControlButtons />
+                    <FaTrash
+                      className="text-danger me-2 mb-1"
+                      onClick={() => {
+                        setShowModal(true);
+                        setSelectedAssignmentId(assignment._id);
+                      }}
+                    />
+                  </span>
+                )}
               </ListGroup.Item>
             )
           )}
