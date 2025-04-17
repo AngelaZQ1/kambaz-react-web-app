@@ -8,6 +8,7 @@ import Home from "./Home";
 import Modules from "./Modules";
 import CourseNavigation from "./Navigation";
 import PeopleTable from "./People/Table";
+import Quizzes from "./Quizzes";
 
 export default function Courses() {
   const { cid } = useParams();
@@ -36,6 +37,7 @@ export default function Courses() {
             <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:aid" element={<AssignmentEditor />} />
             <Route path="People" element={<PeopleTable />} />
+            <Route path="Quizzes" element={<Quizzes />} />
           </Routes>
         </div>
       </div>
