@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Button, Dropdown, ListGroup } from "react-bootstrap";
 import { BiPlus, BiSolidDownArrow } from "react-icons/bi";
 import { BsGripVertical } from "react-icons/bs";
+import { FaCircleCheck } from "react-icons/fa6";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { MdEditDocument } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,6 +42,28 @@ export default function Quizzes() {
   const handleDelete = async (quizId: string) => {
     await quizzesClient.deleteQuiz(quizId);
     fetchQuizzes();
+  };
+
+  const handleUnpublish = async (quizId: string) => {
+    const quiz = quizzes.find((quiz) => quiz._id === quizId);
+    if (quiz) {
+      await quizzesClient.updateQuiz({ ...quiz, published: false });
+      const updatedQuizzes = quizzes.map((q) =>
+        q._id === quizId ? { ...quiz, published: false } : q
+      );
+      dispatch(setQuizzes(updatedQuizzes));
+    }
+  };
+
+  const handlePublish = async (quizId: string) => {
+    const quiz = quizzes.find((quiz) => quiz._id === quizId);
+    if (quiz) {
+      await quizzesClient.updateQuiz({ ...quiz, published: true });
+      const updatedQuizzes = quizzes.map((q) =>
+        q._id === quizId ? { ...quiz, published: true } : q
+      );
+      dispatch(setQuizzes(updatedQuizzes));
+    }
   };
 
   useEffect(() => {
@@ -95,35 +118,47 @@ export default function Quizzes() {
               </div>
             </div>
             {isFaculty && (
-              <Dropdown className="float-end me-2">
-                <Dropdown.Toggle
-                  variant="ghost"
-                  size="lg"
-                  id="wd-quiz-actions-btn"
-                >
-                  <IoEllipsisVertical />
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    id="wd-edit-quiz"
-                    onClick={() => console.log(`Edit quiz ${quiz.id}`)}
+              <div className="d-flex align-items-center">
+                <FaCircleCheck
+                  className="float-end fs-3"
+                  color={quiz.published ? "green" : "gray"}
+                />
+                <Dropdown className="float-end me-2">
+                  <Dropdown.Toggle
+                    variant="ghost"
+                    size="lg"
+                    id="wd-quiz-actions-btn"
                   >
-                    Edit
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    id="wd-delete-quiz"
-                    onClick={() => handleDelete(quiz._id)}
-                  >
-                    Delete
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    id="wd-publish-quiz"
-                    onClick={() => console.log(`Publish quiz ${quiz._id}`)}
-                  >
-                    Publish
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+                    <IoEllipsisVertical />
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      id="wd-edit-quiz"
+                      onClick={() =>
+                        (window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)
+                      }
+                    >
+                      Edit
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      id="wd-delete-quiz"
+                      onClick={() => handleDelete(quiz._id)}
+                    >
+                      Delete
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      id="wd-publish-quiz"
+                      onClick={() =>
+                        quiz.published
+                          ? handleUnpublish(quiz._id)
+                          : handlePublish(quiz._id)
+                      }
+                    >
+                      {quiz.published ? "Unpublish" : "Publish"}
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             )}
           </ListGroup.Item>
         ))}
