@@ -3,6 +3,8 @@ import { Button, Tab, Tabs } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import * as quizzesClient from "../client";
+import EditQuestion from "../EditQuestion";
+import PreviewQuestion from "../PreviewQuestion";
 import { setQuizzes } from "../reducer";
 
 export default function QuizEditor() {
@@ -14,6 +16,8 @@ export default function QuizEditor() {
   );
   const { quizzes } = useSelector((state: any) => state.quizzesReducer);
   const [quiz, setQuiz] = useState(quizzes.find((quiz) => quiz._id === qid));
+
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const handleCancel = () => {
     window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`;
@@ -34,6 +38,8 @@ export default function QuizEditor() {
     dispatch(setQuizzes(updatedQuizzes));
     window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`;
   };
+
+  const handleDelete = async (index: number) => {};
 
   return (
     <Tabs
@@ -253,8 +259,53 @@ export default function QuizEditor() {
           </Button>
         </div>
       </Tab>
-      <Tab eventKey="questions" title="Questions">
-        <div>Questions Content</div>
+
+      {/* QUESTIONS TAB */}
+      <Tab eventKey="questions" title="Questions" className="w-50">
+        <div className="mb-3">Total Points: {quiz.points}</div>
+        {quiz.questions.map((question, index) =>
+          index === editIndex ? (
+            <EditQuestion
+              question={question}
+              setQuiz={setQuiz}
+              quiz={quiz}
+              index={index}
+              setEditIndex={setEditIndex}
+            />
+          ) : (
+            <PreviewQuestion
+              question={question}
+              index={index}
+              setEditIndex={setEditIndex}
+              handleDelete={handleDelete}
+            />
+          )
+        )}
+        <div className="d-flex justify-content-center">
+          <Button
+            variant="secondary"
+            onClick={() =>
+              setQuiz({
+                ...quiz,
+                questions: [
+                  ...quiz.questions,
+                  { question: "", answers: [{ answer: "" }] },
+                ],
+              })
+            }
+          >
+            Add Question
+          </Button>
+        </div>
+        <hr />
+        <div className="d-flex justify-content-end">
+          <Button variant="secondary" className="me-2" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleSave}>
+            Save
+          </Button>
+        </div>
       </Tab>
     </Tabs>
   );

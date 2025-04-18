@@ -1,0 +1,85 @@
+[
+  {
+    "_id": "quiz123",
+    "title": "1234",
+    "course": "RS102",
+    "questions": [
+      {
+        "_id": "680172338037c26439d4d156",
+        "quiz": null,
+        "title": "Test MC",
+        "points": 5,
+        "question": "Angela is how many years old?",
+        "type": "MULTIPLE_CHOICE",
+        "choices": [
+          {
+            "_id": "6802814f8c541455d9466ce4",
+            "text": "22",
+            "isCorrect": true
+          },
+          {
+            "_id": "6802814f8c541455d9466ce5",
+            "text": "23",
+            "isCorrect": false
+          },
+          {
+            "_id": "6802814f8c541455d9466ce6",
+            "text": "24",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "_id": "123",
+        "quiz": null,
+        "title": "Test TF",
+        "points": 5,
+        "question": "Angela is a great coder",
+        "type": "TRUE_FALSE",
+        "choices": [
+          {
+            "_id": "6802814f8c541455d9466ce1",
+            "text": "True",
+            "isCorrect": true
+          },
+          {
+            "_id": "6802814f8c541455d9466ce2",
+            "text": "False",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "_id": "234",
+        "quiz": null,
+        "title": "Test FITB",
+        "points": 5,
+        "question": "A(n) ___ a day keeps the doctor away",
+        "type": "FILL_IN_THE_BLANK",
+        "choices": [
+          {
+            "_id": "6802814f8c541455d9466ce3",
+            "text": "apple",
+            "isCorrect": true
+          }
+        ]
+      }
+    ],
+    "type": "Practice Quiz",
+    "points": 2,
+    "assignmentGroup": "Exams",
+    "shuffleAnswers": false,
+    "timeLimit": 123,
+    "allowMultipleAttempts": false,
+    "numAllowedAttempts": 1,
+    "showCorrectAnswers": "",
+    "accessCode": "123",
+    "oneQuestionAtATime": false,
+    "webcamRequired": true,
+    "lockQuestionsAfterAnswering": true,
+    "dueDate": "2025-04-17T00:00:00.000Z",
+    "availableDate": "2025-04-18T00:00:00.000Z",
+    "untilDate": "2025-04-18T00:00:00.000Z",
+    "published": true
+  }
+]
