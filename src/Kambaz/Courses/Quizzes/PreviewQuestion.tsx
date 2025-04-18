@@ -26,7 +26,7 @@ export default function PreviewQuestion({
           >
             Edit
           </Button>
-          <Button variant="danger" onClick={() => handleDelete(index)}>
+          <Button variant="danger" onClick={() => handleDelete(question._id)}>
             Delete
           </Button>
         </div>

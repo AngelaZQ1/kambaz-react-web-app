@@ -39,7 +39,18 @@ export default function QuizEditor() {
     window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`;
   };
 
-  const handleDelete = async (index: number) => {};
+  const handleDelete = async (questionId: number) => {
+    const updatedQuiz = {
+      ...quiz,
+      questions: quiz.questions.filter((q) => q._id !== questionId),
+    };
+    await quizzesClient.deleteQuestionFromQuiz(qid, questionId);
+    setQuiz(updatedQuiz);
+    const updatedQuizzes = quizzes.map((q) =>
+      q._id === quiz._id ? updatedQuiz : q
+    );
+    dispatch(setQuizzes(updatedQuizzes));
+  };
 
   return (
     <Tabs

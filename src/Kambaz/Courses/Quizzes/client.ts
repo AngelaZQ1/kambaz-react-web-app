@@ -30,6 +30,15 @@ export const addQuestionToQuiz = async (quizId: string, questionData: any) => {
   );
   return data;
 };
+export const deleteQuestionFromQuiz = async (
+  quizId: string,
+  questionId: string
+) => {
+  const { data } = await axiosWithCredentials.delete(
+    `${QUIZZES_API}/${quizId}/questions/${questionId}`
+  );
+  return data;
+};
 export const updateQuestion = async (questionId: string, questionData: any) => {
   const { data } = await axiosWithCredentials.put(
     `${QUESTIONS_API}/${questionId}`,
