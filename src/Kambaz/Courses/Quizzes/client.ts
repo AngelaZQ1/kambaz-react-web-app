@@ -15,13 +15,13 @@ export const getAllQuizzes = async (courseId: string) => {
 //   );
 //   return response.data;
 // };
-// export const updateAssignment = async (assignment: any) => {
-//   const { data } = await axiosWithCredentials.put(
-//     `${QUIZZES_API}/${assignment._id}`,
-//     assignment
-//   );
-//   return data;
-// };
+export const updateQuiz = async (quiz: any) => {
+  const { data } = await axiosWithCredentials.put(
+    `${QUIZZES_API}/${quiz._id}`,
+    quiz
+  );
+  return data;
+};
 export const deleteQuiz = async (quizId: any) => {
   const { data } = await axiosWithCredentials.delete(
     `${QUIZZES_API}/${quizId}`

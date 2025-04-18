@@ -3,10 +3,9 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 
 export default function QuizDetails() {
-  const { qid } = useParams();
+  const { cid, qid } = useParams();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { quizzes } = useSelector((state: any) => state.quizzesReducer);
-
   const quiz = quizzes.find((quiz) => quiz._id === qid);
 
   return (
@@ -19,7 +18,13 @@ export default function QuizDetails() {
           >
             Preview
           </Button>
-          <Button onClick={() => alert("Editing the quiz...")}>Edit</Button>
+          <Button
+            onClick={() =>
+              (window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/editor`)
+            }
+          >
+            Edit
+          </Button>
         </div>
       )}
       <h2>{quiz.title}</h2>
