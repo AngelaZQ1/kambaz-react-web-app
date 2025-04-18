@@ -122,6 +122,11 @@ export default function Quizzes() {
                 <FaCircleCheck
                   className="float-end fs-3"
                   color={quiz.published ? "green" : "gray"}
+                  onClick={() =>
+                    quiz.published
+                      ? handleUnpublish(quiz._id)
+                      : handlePublish(quiz._id)
+                  }
                 />
                 <Dropdown className="float-end me-2">
                   <Dropdown.Toggle
