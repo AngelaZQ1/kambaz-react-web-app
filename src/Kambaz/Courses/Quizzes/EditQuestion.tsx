@@ -34,7 +34,11 @@ export default function EditQuestion({
               setQuestion({ ...question, title: e.target.value })
             }
           />
-          <select value={question.type} className="form-control">
+          <select
+            value={question.type}
+            className="form-control"
+            onChange={(e) => setQuestion({ ...question, type: e.target.value })}
+          >
             <option value="MULTIPLE_CHOICE">Multiple Choice</option>
             <option value="TRUE_FALSE">True/False</option>
             <option value="FILL_IN_THE_BLANK">Fill in the Blank</option>
