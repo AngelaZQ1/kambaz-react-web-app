@@ -23,7 +23,7 @@ export default function QuizEditor() {
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const handleCancel = () => {
-    window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`;
+    window.location.href = `#/Kambaz/Courses/${cid}/Quizzes`;
   };
 
   const handleSave = async () => {
@@ -41,7 +41,7 @@ export default function QuizEditor() {
       q._id === quiz._id ? { ...quiz, published: true } : q
     );
     dispatch(setQuizzes(updatedQuizzes));
-    window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`;
+    window.location.href = `#/Kambaz/Courses/${cid}/Quizzes`;
   };
 
   const handleDelete = async (questionId: number) => {
@@ -184,14 +184,16 @@ export default function QuizEditor() {
           </div>
           <div className="mb-3">
             <label className="form-label">Show Correct Answers</label>
-            <input
-              type="text"
-              className="form-control"
-              defaultValue={quiz?.showCorrectAnswers || ""}
+            <select
+              className="form-select"
+              defaultValue={quiz?.showCorrectAnswers ? "Yes" : "No"}
               onChange={(e) =>
                 setQuiz({ ...quiz, showCorrectAnswers: e.target.value })
               }
-            />
+            >
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
           </div>
           <div className="mb-3">
             <label className="form-label">Access Code</label>
@@ -238,7 +240,7 @@ export default function QuizEditor() {
             <label className="form-label">Lock Questions After Answering</label>
             <select
               className="form-select"
-              defaultValue={quiz?.lockQuestionsAfterAnswering ? "Yes" : "No"}
+              value={quiz?.lockQuestionsAfterAnswering ? "Yes" : "No"}
               onChange={(e) =>
                 setQuiz({
                   ...quiz,
@@ -255,7 +257,11 @@ export default function QuizEditor() {
             <input
               type="date"
               className="form-control"
-              defaultValue={quiz?.dueDate || ""}
+              value={
+                quiz?.dueDate
+                  ? new Date(quiz.dueDate).toISOString().split("T")[0]
+                  : ""
+              }
               onChange={(e) => setQuiz({ ...quiz, dueDate: e.target.value })}
             />
           </div>
@@ -264,7 +270,11 @@ export default function QuizEditor() {
             <input
               type="date"
               className="form-control"
-              defaultValue={quiz?.availableDate || ""}
+              value={
+                quiz?.availableDate
+                  ? new Date(quiz.availableDate).toISOString().split("T")[0]
+                  : ""
+              }
               onChange={(e) =>
                 setQuiz({ ...quiz, availableDate: e.target.value })
               }
@@ -275,7 +285,11 @@ export default function QuizEditor() {
             <input
               type="date"
               className="form-control"
-              defaultValue={quiz?.untilDate || ""}
+              value={
+                quiz?.untilDate
+                  ? new Date(quiz.untilDate).toISOString().split("T")[0]
+                  : ""
+              }
               onChange={(e) => setQuiz({ ...quiz, untilDate: e.target.value })}
             />
           </div>
