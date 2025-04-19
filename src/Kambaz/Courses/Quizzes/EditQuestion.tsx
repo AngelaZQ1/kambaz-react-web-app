@@ -22,10 +22,25 @@ export default function EditQuestion({
     setEditIndex(-1);
   };
 
+  const handleTypeChange = (type: string) => {
+    const updatedChoices =
+      type === "FILL_IN_THE_BLANK"
+        ? question.choices.map((choice: any) => ({
+            ...choice,
+            isCorrect: true,
+          }))
+        : question.choices.map((choice: any) => ({
+            ...choice,
+            isCorrect: false,
+          }));
+
+    setQuestion({ ...question, type, choices: updatedChoices });
+  };
+
   return (
     <div key={index} className="mb-3">
       <div className="d-flex justify-content-between">
-        <div className="d-flex  gap-2">
+        <div className="d-flex gap-2">
           <input
             type="text"
             className="form-control"
@@ -37,14 +52,14 @@ export default function EditQuestion({
           <select
             value={question.type}
             className="form-control"
-            onChange={(e) => setQuestion({ ...question, type: e.target.value })}
+            onChange={(e) => handleTypeChange(e.target.value)}
           >
             <option value="MULTIPLE_CHOICE">Multiple Choice</option>
             <option value="TRUE_FALSE">True/False</option>
             <option value="FILL_IN_THE_BLANK">Fill in the Blank</option>
           </select>
         </div>
-        <div className="d-flex  w-25">
+        <div className="d-flex w-25">
           <p>Pts:</p>
           <input
             type="text"
@@ -72,22 +87,24 @@ export default function EditQuestion({
             i: number
           ) => (
             <div key={i} className="mb-2 d-flex gap-2 align-items-center">
-              <input
-                type="radio"
-                name={`correct-answer-${index}`}
-                className="form-check-input flex-shrink-0"
-                checked={choice.isCorrect || false}
-                onChange={() =>
-                  setQuestion({
-                    ...question,
-                    choices: question.choices.map((choice: any, j: any) =>
-                      j === i
-                        ? { ...choice, isCorrect: true }
-                        : { ...choice, isCorrect: false }
-                    ),
-                  })
-                }
-              />
+              {question.type !== "FILL_IN_THE_BLANK" && (
+                <input
+                  type="radio"
+                  name={`correct-answer-${index}`}
+                  className="form-check-input flex-shrink-0"
+                  checked={choice.isCorrect || false}
+                  onChange={() =>
+                    setQuestion({
+                      ...question,
+                      choices: question.choices.map((choice: any, j: any) =>
+                        j === i
+                          ? { ...choice, isCorrect: true }
+                          : { ...choice, isCorrect: false }
+                      ),
+                    })
+                  }
+                />
+              )}
               <input
                 type="text"
                 className="form-control"
@@ -122,7 +139,10 @@ export default function EditQuestion({
           onClick={() =>
             setQuestion({
               ...question,
-              choices: [...question.choices, { text: "" }],
+              choices: [
+                ...question.choices,
+                { text: "", isCorrect: question.type === "FILL_IN_THE_BLANK" },
+              ],
             })
           }
         >
