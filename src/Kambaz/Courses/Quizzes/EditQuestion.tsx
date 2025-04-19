@@ -61,7 +61,22 @@ export default function EditQuestion({
       <div className="mt-2">
         {question.choices.map((choice, i) => (
           <div key={i} className="mb-2 d-flex gap-2 align-items-center">
-            <p className="flex-shrink-0">Possible answer:</p>
+            <input
+              type="radio"
+              name={`correct-answer-${index}`}
+              className="form-check-input flex-shrink-0"
+              checked={choice.isCorrect || false}
+              onChange={() =>
+                setQuestion({
+                  ...question,
+                  choices: question.choices.map((choice, j) =>
+                    j === i
+                      ? { ...choice, isCorrect: true }
+                      : { ...choice, isCorrect: false }
+                  ),
+                })
+              }
+            />
             <input
               type="text"
               className="form-control"
@@ -75,8 +90,30 @@ export default function EditQuestion({
                 })
               }
             />
+            <Button
+              variant="danger"
+              onClick={() =>
+                setQuestion({
+                  ...question,
+                  choices: question.choices.filter((_, j) => j !== i),
+                })
+              }
+            >
+              Remove
+            </Button>
           </div>
         ))}
+        <Button
+          variant="primary"
+          onClick={() =>
+            setQuestion({
+              ...question,
+              choices: [...question.choices, { text: "" }],
+            })
+          }
+        >
+          Add Choice
+        </Button>
       </div>
 
       <div className="mt-3">
