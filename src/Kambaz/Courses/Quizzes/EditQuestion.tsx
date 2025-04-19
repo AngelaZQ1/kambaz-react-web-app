@@ -51,7 +51,7 @@ export default function EditQuestion({
             className="form-control"
             value={question.points}
             onChange={(e) =>
-              setQuestion({ ...question, points: e.target.value })
+              setQuestion({ ...question, points: Number(e.target.value) })
             }
           />
         </div>

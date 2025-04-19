@@ -60,14 +60,22 @@ export default function QuizEditor() {
   };
 
   const updateQuestion = async (question: any) => {
+    const updatedQuestions = quiz.questions.map((q: { _id: any }) =>
+      q._id === question._id ? question : q
+    );
+    const totalPoints = updatedQuestions.reduce(
+      (sum, q) => sum + (q.points || 0),
+      0
+    );
     const updatedQuiz = {
       ...quiz,
-      questions: quiz.questions.map((q: { _id: any }) =>
-        q._id === question._id ? question : q
-      ),
+      questions: updatedQuestions,
+      points: totalPoints,
     };
     await quizzesClient.updateQuestion(question._id, question);
+    await quizzesClient.updateQuiz(updatedQuiz);
     setQuiz(updatedQuiz);
+
     const updatedQuizzes = quizzes.map((q: { _id: any }) =>
       q._id === quiz._id ? updatedQuiz : q
     );
@@ -94,9 +102,10 @@ export default function QuizEditor() {
       onSelect={(k) => setActiveTab(k as "details" | "questions")}
       className="mb-3"
     >
-      <Tab eventKey="details" title="Details">
+      <Tab eventKey="details" title="Details" className="w-50">
+        <div className="mb-2">Total Points: {quiz.points}</div>
         <form>
-          <div className="mb-3">
+          <div className="mb-2">
             <input
               type="text"
               className="form-control"
@@ -104,7 +113,7 @@ export default function QuizEditor() {
               onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Quiz Instructions:</label>
             <textarea
               className="form-control"
@@ -115,7 +124,7 @@ export default function QuizEditor() {
               }
             ></textarea>
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Quiz Type</label>
             <select
               className="form-select"
@@ -128,18 +137,7 @@ export default function QuizEditor() {
               <option value="Ungraded Survey">Ungraded Survey</option>
             </select>
           </div>
-          <div className="mb-3">
-            <label className="form-label">Points</label>
-            <input
-              type="text"
-              className="form-control"
-              value={quiz?.points || ""}
-              onChange={(e) =>
-                setQuiz({ ...quiz, points: Number(e.target.value) })
-              }
-            />
-          </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Assignment Group</label>
             <select
               className="form-select"
@@ -154,7 +152,7 @@ export default function QuizEditor() {
               <option value="Project">Project</option>
             </select>
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Shuffle Answers</label>
             <select
               className="form-select"
@@ -170,7 +168,7 @@ export default function QuizEditor() {
               <option value="No">No</option>
             </select>
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Time Limit</label>
             <input
               type="text"
@@ -179,7 +177,7 @@ export default function QuizEditor() {
               onChange={(e) => setQuiz({ ...quiz, timeLimit: e.target.value })}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Multiple Attempts</label>
             <select
               className="form-select"
@@ -195,7 +193,7 @@ export default function QuizEditor() {
               <option value="Yes">Yes</option>
             </select>
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Show Correct Answers</label>
             <select
               className="form-select"
@@ -208,7 +206,7 @@ export default function QuizEditor() {
               <option value="Yes">Yes</option>
             </select>
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Access Code</label>
             <input
               type="text"
@@ -217,7 +215,7 @@ export default function QuizEditor() {
               onChange={(e) => setQuiz({ ...quiz, accessCode: e.target.value })}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">One Question at a Time</label>
             <select
               className="form-select"
@@ -233,7 +231,7 @@ export default function QuizEditor() {
               <option value="No">No</option>
             </select>
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Webcam Required</label>
             <select
               className="form-select"
@@ -249,7 +247,7 @@ export default function QuizEditor() {
               <option value="Yes">Yes</option>
             </select>
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Lock Questions After Answering</label>
             <select
               className="form-select"
@@ -265,7 +263,7 @@ export default function QuizEditor() {
               <option value="Yes">Yes</option>
             </select>
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Due Date</label>
             <input
               type="date"
@@ -278,7 +276,7 @@ export default function QuizEditor() {
               onChange={(e) => setQuiz({ ...quiz, dueDate: e.target.value })}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Available Date</label>
             <input
               type="date"
@@ -293,7 +291,7 @@ export default function QuizEditor() {
               }
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="form-label">Until Date</label>
             <input
               type="date"

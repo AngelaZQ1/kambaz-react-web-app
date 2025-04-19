@@ -17,22 +17,26 @@ export default function PreviewQuestion({
     div.innerHTML = html;
     return div.textContent || div.innerText || "";
   };
-  console.log("question", question);
   return (
-    <div key={index} className="mb-5 border border-dark-subtle p-3">
+    <div key={index} className="mb-3 border border-dark-subtle p-3">
       <div className="d-flex justify-content-between">
         <h3>{question.title}</h3>
         <div>
           <Button
             variant="secondary"
             className="me-2"
+            size="sm"
             onClick={() => {
               setEditIndex(index!);
             }}
           >
             Edit
           </Button>
-          <Button variant="danger" onClick={() => handleDelete(question)}>
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={() => handleDelete(question)}
+          >
             Delete
           </Button>
         </div>
