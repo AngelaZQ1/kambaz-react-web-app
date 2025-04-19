@@ -52,6 +52,21 @@ export default function QuizEditor() {
     dispatch(setQuizzes(updatedQuizzes));
   };
 
+  const updateQuestion = async (question: any) => {
+    const updatedQuiz = {
+      ...quiz,
+      questions: quiz.questions.map((q) =>
+        q._id === question._id ? question : q
+      ),
+    };
+    await quizzesClient.updateQuestion(question._id, question);
+    setQuiz(updatedQuiz);
+    const updatedQuizzes = quizzes.map((q) =>
+      q._id === quiz._id ? updatedQuiz : q
+    );
+    dispatch(setQuizzes(updatedQuizzes));
+  };
+
   return (
     <Tabs
       id="quiz-editor-tabs"
@@ -277,9 +292,8 @@ export default function QuizEditor() {
         {quiz.questions.map((question, index) =>
           index === editIndex ? (
             <EditQuestion
-              question={question}
-              setQuiz={setQuiz}
-              quiz={quiz}
+              originalQuestion={question}
+              updateQuestion={updateQuestion}
               index={index}
               setEditIndex={setEditIndex}
             />

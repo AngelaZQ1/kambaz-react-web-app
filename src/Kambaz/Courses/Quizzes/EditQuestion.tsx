@@ -2,44 +2,26 @@
 
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import * as quizzesClient from "./client";
+import Editor from "react-simple-wysiwyg";
 
 export default function EditQuestion({
-  quiz,
-  setQuiz,
-  question,
+  originalQuestion,
+  updateQuestion,
   index,
   setEditIndex,
 }: {
-  question: any;
+  originalQuestion: any;
   index: number;
-  quiz: any;
-  setQuiz: (quiz: any) => void;
+  updateQuestion: (question: any) => void;
   setEditIndex: (index: number) => void;
 }) {
-  const [originalQuestion] = useState({ ...question });
+  const [question, setQuestion] = useState(originalQuestion);
 
   const handleCancel = () => {
-    setQuiz({
-      ...quiz,
-      questions: quiz.questions.map((q, i) =>
-        i === index ? originalQuestion : q
-      ),
-    });
+    setQuestion(originalQuestion);
     setEditIndex(-1);
   };
 
-  const handleUpdateQuestion = async () => {
-    const updatedQuiz = {
-      ...quiz,
-      questions: quiz.questions.map((q, i) =>
-        i === index ? { ...q, question: question.question } : q
-      ),
-    };
-    setQuiz(updatedQuiz);
-    await quizzesClient.updateQuestion(question._id, question);
-    setEditIndex(-1);
-  };
   return (
     <div key={index} className="mb-3">
       <div className="d-flex justify-content-between">
@@ -49,12 +31,7 @@ export default function EditQuestion({
             className="form-control"
             value={question.title}
             onChange={(e) =>
-              setQuiz({
-                ...quiz,
-                questions: quiz.questions.map((q, i) =>
-                  i === index ? { ...q, title: e.target.value } : q
-                ),
-              })
+              setQuestion({ ...question, title: e.target.value })
             }
           />
           <select value={question.type} className="form-control">
@@ -70,30 +47,15 @@ export default function EditQuestion({
             className="form-control"
             value={question.points}
             onChange={(e) =>
-              setQuiz({
-                ...quiz,
-                questions: quiz.questions.map((q, i) =>
-                  i === index ? { ...q, points: e.target.value } : q
-                ),
-              })
+              setQuestion({ ...question, points: e.target.value })
             }
           />
         </div>
       </div>
       <label className="mt-4">Question</label>
-      <textarea
-        placeholder="Enter question here"
-        className="form-control"
-        rows={3}
+      <Editor
         value={question.question}
-        onChange={(e) =>
-          setQuiz({
-            ...quiz,
-            questions: quiz.questions.map((q, i) =>
-              i === index ? { ...q, question: e.target.value } : q
-            ),
-          })
-        }
+        onChange={(e) => setQuestion({ ...question, question: e.target.value })}
       />
 
       <div className="mt-2">
@@ -105,17 +67,10 @@ export default function EditQuestion({
               className="form-control"
               value={choice.text}
               onChange={(e) =>
-                setQuiz({
-                  ...quiz,
-                  questions: quiz.questions.map((q, i) =>
-                    i === index
-                      ? {
-                          ...q,
-                          choices: q.choices.map((a, j) =>
-                            j === i ? { ...a, text: e.target.value } : a
-                          ),
-                        }
-                      : q
+                setQuestion({
+                  ...question,
+                  choices: question.choices.map((choice, j) =>
+                    j === i ? { ...choice, text: e.target.value } : choice
                   ),
                 })
               }
@@ -128,7 +83,13 @@ export default function EditQuestion({
         <Button variant="secondary" onClick={handleCancel}>
           Cancel
         </Button>
-        <Button variant="btn-danger" onClick={handleUpdateQuestion}>
+        <Button
+          variant="btn-danger"
+          onClick={() => {
+            updateQuestion(question);
+            setEditIndex(-1);
+          }}
+        >
           Update Question
         </Button>
       </div>

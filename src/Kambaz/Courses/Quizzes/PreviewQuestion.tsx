@@ -12,6 +12,11 @@ export default function PreviewQuestion({
   setEditIndex: (index: number) => void;
   handleDelete: (index: number) => void;
 }) {
+  const stripHtmlTags = (html: string) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+  };
   return (
     <div key={index} className="mb-5 border border-dark-subtle p-3">
       <div className="d-flex justify-content-between">
@@ -31,7 +36,7 @@ export default function PreviewQuestion({
           </Button>
         </div>
       </div>
-      <p>{question.question}</p>
+      <p>{stripHtmlTags(question.question)}</p>
       <div className="mt-2">
         {question.choices.map((choice, i) => (
           <div key={i} className="mb-2">
