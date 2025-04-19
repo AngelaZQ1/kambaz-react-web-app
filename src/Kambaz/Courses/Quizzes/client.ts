@@ -36,12 +36,9 @@ export const addQuestionToQuiz = async (quizId: string, questionData: any) => {
   );
   return data;
 };
-export const deleteQuestionFromQuiz = async (
-  quizId: string,
-  questionId: string
-) => {
+export const deleteQuestionFromQuiz = async (quizId: string, question: any) => {
   const { data } = await axiosWithCredentials.delete(
-    `${QUIZZES_API}/${quizId}/questions/${questionId}`
+    `${QUIZZES_API}/${quizId}/questions/${question._id}`
   );
   return data;
 };

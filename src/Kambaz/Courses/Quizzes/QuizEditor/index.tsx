@@ -44,14 +44,14 @@ export default function QuizEditor() {
     window.location.href = `#/Kambaz/Courses/${cid}/Quizzes`;
   };
 
-  const handleDelete = async (questionId: number) => {
+  const handleDelete = async (question: any) => {
     const updatedQuiz = {
       ...quiz,
       questions: quiz.questions.filter(
-        (q: { _id: number }) => q._id !== questionId
+        (q: { _id: number }) => q._id !== question._id
       ),
     };
-    await quizzesClient.deleteQuestionFromQuiz(qid!, questionId.toString());
+    await quizzesClient.deleteQuestionFromQuiz(qid!, question._id);
     setQuiz(updatedQuiz);
     const updatedQuizzes = quizzes.map((q: { _id: any }) =>
       q._id === quiz._id ? updatedQuiz : q
@@ -67,6 +67,19 @@ export default function QuizEditor() {
       ),
     };
     await quizzesClient.updateQuestion(question._id, question);
+    setQuiz(updatedQuiz);
+    const updatedQuizzes = quizzes.map((q: { _id: any }) =>
+      q._id === quiz._id ? updatedQuiz : q
+    );
+    dispatch(setQuizzes(updatedQuizzes));
+  };
+
+  const handleAddQuestion = async () => {
+    const newQuestion = await quizzesClient.addQuestionToQuiz(qid!, null);
+    const updatedQuiz = {
+      ...quiz,
+      questions: [...quiz.questions, newQuestion],
+    };
     setQuiz(updatedQuiz);
     const updatedQuizzes = quizzes.map((q: { _id: any }) =>
       q._id === quiz._id ? updatedQuiz : q
@@ -328,18 +341,7 @@ export default function QuizEditor() {
           )
         )}
         <div className="d-flex justify-content-center">
-          <Button
-            variant="secondary"
-            onClick={() =>
-              setQuiz({
-                ...quiz,
-                questions: [
-                  ...quiz.questions,
-                  { question: "", answers: [{ answer: "" }] },
-                ],
-              })
-            }
-          >
+          <Button variant="secondary" onClick={handleAddQuestion}>
             Add Question
           </Button>
         </div>

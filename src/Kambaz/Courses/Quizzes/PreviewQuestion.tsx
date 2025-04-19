@@ -10,13 +10,14 @@ export default function PreviewQuestion({
   question: any;
   index: number | null;
   setEditIndex: (index: number) => void;
-  handleDelete: (index: number) => void;
+  handleDelete: (question: any) => void;
 }) {
   const stripHtmlTags = (html: string) => {
     const div = document.createElement("div");
     div.innerHTML = html;
     return div.textContent || div.innerText || "";
   };
+  console.log("question", question);
   return (
     <div key={index} className="mb-5 border border-dark-subtle p-3">
       <div className="d-flex justify-content-between">
@@ -31,7 +32,7 @@ export default function PreviewQuestion({
           >
             Edit
           </Button>
-          <Button variant="danger" onClick={() => handleDelete(question._id)}>
+          <Button variant="danger" onClick={() => handleDelete(question)}>
             Delete
           </Button>
         </div>
