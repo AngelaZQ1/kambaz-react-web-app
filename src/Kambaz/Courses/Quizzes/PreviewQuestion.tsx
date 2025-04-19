@@ -8,7 +8,7 @@ export default function PreviewQuestion({
   handleDelete,
 }: {
   question: any;
-  index: number;
+  index: number | null;
   setEditIndex: (index: number) => void;
   handleDelete: (index: number) => void;
 }) {
@@ -26,7 +26,7 @@ export default function PreviewQuestion({
             variant="secondary"
             className="me-2"
             onClick={() => {
-              setEditIndex(index);
+              setEditIndex(index!);
             }}
           >
             Edit
@@ -38,28 +38,35 @@ export default function PreviewQuestion({
       </div>
       <p>{stripHtmlTags(question.question)}</p>
       <div className="mt-2">
-        {question.choices.map((choice, i) => (
-          <div key={i} className="mb-2">
-            <hr />
-            {question.type !== "FILL_IN_THE_BLANK" ? (
-              <>
+        {question.choices.map(
+          (
+            choice: {
+              text: string;
+            },
+            i: number
+          ) => (
+            <div key={i} className="mb-2">
+              <hr />
+              {question.type !== "FILL_IN_THE_BLANK" ? (
+                <>
+                  <input
+                    type="radio"
+                    name="radio-genre"
+                    id="choice"
+                    className="me-2"
+                  />
+                  <label htmlFor="choice">{choice.text}</label>
+                </>
+              ) : (
                 <input
-                  type="radio"
-                  name="radio-genre"
-                  id="choice"
-                  className="me-2"
+                  type="text"
+                  className="form-control"
+                  defaultValue={choice.text}
                 />
-                <label htmlFor="choice">{choice.text}</label>
-              </>
-            ) : (
-              <input
-                type="text"
-                className="form-control"
-                defaultValue={choice.text}
-              />
-            )}
-          </div>
-        ))}
+              )}
+            </div>
+          )
+        )}
       </div>
     </div>
   );

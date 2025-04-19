@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button, Tab, Tabs } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +16,9 @@ export default function QuizEditor() {
     "details"
   );
   const { quizzes } = useSelector((state: any) => state.quizzesReducer);
-  const [quiz, setQuiz] = useState(quizzes.find((quiz) => quiz._id === qid));
+  const [quiz, setQuiz] = useState(
+    quizzes.find((quiz: { _id: string | undefined }) => quiz._id === qid)
+  );
 
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
@@ -25,14 +28,16 @@ export default function QuizEditor() {
 
   const handleSave = async () => {
     await quizzesClient.updateQuiz(quiz);
-    const updatedQuizzes = quizzes.map((q) => (q._id === quiz._id ? quiz : q));
+    const updatedQuizzes = quizzes.map((q: { _id: any }) =>
+      q._id === quiz._id ? quiz : q
+    );
     dispatch(setQuizzes(updatedQuizzes));
     window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`;
   };
 
   const handleSaveAndPublish = async () => {
     await quizzesClient.updateQuiz({ ...quiz, published: true });
-    const updatedQuizzes = quizzes.map((q) =>
+    const updatedQuizzes = quizzes.map((q: { _id: any }) =>
       q._id === quiz._id ? { ...quiz, published: true } : q
     );
     dispatch(setQuizzes(updatedQuizzes));
@@ -42,11 +47,13 @@ export default function QuizEditor() {
   const handleDelete = async (questionId: number) => {
     const updatedQuiz = {
       ...quiz,
-      questions: quiz.questions.filter((q) => q._id !== questionId),
+      questions: quiz.questions.filter(
+        (q: { _id: number }) => q._id !== questionId
+      ),
     };
-    await quizzesClient.deleteQuestionFromQuiz(qid, questionId);
+    await quizzesClient.deleteQuestionFromQuiz(qid!, questionId.toString());
     setQuiz(updatedQuiz);
-    const updatedQuizzes = quizzes.map((q) =>
+    const updatedQuizzes = quizzes.map((q: { _id: any }) =>
       q._id === quiz._id ? updatedQuiz : q
     );
     dispatch(setQuizzes(updatedQuizzes));
@@ -55,13 +62,13 @@ export default function QuizEditor() {
   const updateQuestion = async (question: any) => {
     const updatedQuiz = {
       ...quiz,
-      questions: quiz.questions.map((q) =>
+      questions: quiz.questions.map((q: { _id: any }) =>
         q._id === question._id ? question : q
       ),
     };
     await quizzesClient.updateQuestion(question._id, question);
     setQuiz(updatedQuiz);
-    const updatedQuizzes = quizzes.map((q) =>
+    const updatedQuizzes = quizzes.map((q: { _id: any }) =>
       q._id === quiz._id ? updatedQuiz : q
     );
     dispatch(setQuizzes(updatedQuizzes));
@@ -289,7 +296,7 @@ export default function QuizEditor() {
       {/* QUESTIONS TAB */}
       <Tab eventKey="questions" title="Questions" className="w-50">
         <div className="mb-3">Total Points: {quiz.points}</div>
-        {quiz.questions.map((question, index) =>
+        {quiz.questions.map((question: unknown, index: number | null) =>
           index === editIndex ? (
             <EditQuestion
               originalQuestion={question}

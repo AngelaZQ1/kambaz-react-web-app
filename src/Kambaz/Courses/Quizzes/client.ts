@@ -9,6 +9,12 @@ export const getAllQuizzes = async (courseId: string) => {
   const response = await axiosWithCredentials.get(`${QUIZZES_API}/${courseId}`);
   return response.data;
 };
+export const createQuiz = async (courseId: string) => {
+  const { data } = await axiosWithCredentials.post(
+    `${QUIZZES_API}/${courseId}`
+  );
+  return data;
+};
 export const updateQuiz = async (quiz: any) => {
   const { data } = await axiosWithCredentials.put(
     `${QUIZZES_API}/${quiz._id}`,

@@ -11,7 +11,7 @@ export default function EditQuestion({
   setEditIndex,
 }: {
   originalQuestion: any;
-  index: number;
+  index: number | null;
   updateQuestion: (question: any) => void;
   setEditIndex: (index: number) => void;
 }) {
@@ -59,50 +59,60 @@ export default function EditQuestion({
       />
 
       <div className="mt-2">
-        {question.choices.map((choice, i) => (
-          <div key={i} className="mb-2 d-flex gap-2 align-items-center">
-            <input
-              type="radio"
-              name={`correct-answer-${index}`}
-              className="form-check-input flex-shrink-0"
-              checked={choice.isCorrect || false}
-              onChange={() =>
-                setQuestion({
-                  ...question,
-                  choices: question.choices.map((choice, j) =>
-                    j === i
-                      ? { ...choice, isCorrect: true }
-                      : { ...choice, isCorrect: false }
-                  ),
-                })
-              }
-            />
-            <input
-              type="text"
-              className="form-control"
-              value={choice.text}
-              onChange={(e) =>
-                setQuestion({
-                  ...question,
-                  choices: question.choices.map((choice, j) =>
-                    j === i ? { ...choice, text: e.target.value } : choice
-                  ),
-                })
-              }
-            />
-            <Button
-              variant="danger"
-              onClick={() =>
-                setQuestion({
-                  ...question,
-                  choices: question.choices.filter((_, j) => j !== i),
-                })
-              }
-            >
-              Remove
-            </Button>
-          </div>
-        ))}
+        {question.choices.map(
+          (
+            choice: {
+              isCorrect: any;
+              text: string;
+            },
+            i: number
+          ) => (
+            <div key={i} className="mb-2 d-flex gap-2 align-items-center">
+              <input
+                type="radio"
+                name={`correct-answer-${index}`}
+                className="form-check-input flex-shrink-0"
+                checked={choice.isCorrect || false}
+                onChange={() =>
+                  setQuestion({
+                    ...question,
+                    choices: question.choices.map((choice: any, j: any) =>
+                      j === i
+                        ? { ...choice, isCorrect: true }
+                        : { ...choice, isCorrect: false }
+                    ),
+                  })
+                }
+              />
+              <input
+                type="text"
+                className="form-control"
+                value={choice.text}
+                onChange={(e) =>
+                  setQuestion({
+                    ...question,
+                    choices: question.choices.map((choice: any, j: any) =>
+                      j === i ? { ...choice, text: e.target.value } : choice
+                    ),
+                  })
+                }
+              />
+              <Button
+                variant="danger"
+                onClick={() =>
+                  setQuestion({
+                    ...question,
+                    choices: question.choices.filter(
+                      (_: any, j: any) => j !== i
+                    ),
+                  })
+                }
+              >
+                Remove
+              </Button>
+            </div>
+          )
+        )}
         <Button
           variant="primary"
           onClick={() =>

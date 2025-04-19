@@ -39,6 +39,12 @@ export default function Quizzes() {
     dispatch(setQuizzes(quizzesWithAvailability));
   };
 
+  const handleNewQuiz = async () => {
+    const newQuiz = await quizzesClient.createQuiz(cid!);
+    dispatch(setQuizzes([newQuiz]));
+    window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${newQuiz._id}`;
+  };
+
   const handleDelete = async (quizId: string) => {
     await quizzesClient.deleteQuiz(quizId);
     fetchQuizzes();
@@ -74,12 +80,7 @@ export default function Quizzes() {
     <div>
       <div className="d-flex justify-content-end">
         {isFaculty && (
-          <Button
-            variant="danger"
-            onClick={() =>
-              (window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/new`)
-            }
-          >
+          <Button variant="danger" onClick={handleNewQuiz}>
             <BiPlus />
             Quiz
           </Button>
@@ -109,11 +110,11 @@ export default function Quizzes() {
                   {quiz.title}
                 </a>
                 <p>
-                  {`${quiz.availability} | Due ${new Date(
+                  {`${quiz.availability} | ${
                     quiz.dueDate
-                  ).toLocaleString()} | ${quiz.points} pts | ${
-                    quiz.questions.length
-                  } questions`}
+                      ? `Due ${new Date(quiz.dueDate)?.toLocaleString()}`
+                      : "No due date"
+                  } | ${quiz.points} pts | ${quiz.questions.length} questions`}
                 </p>
               </div>
             </div>
