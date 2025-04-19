@@ -51,7 +51,7 @@ export default function QuizEditor() {
         (q: { _id: number }) => q._id !== question._id
       ),
     };
-    await quizzesClient.deleteQuestionFromQuiz(qid!, question._id);
+    await quizzesClient.deleteQuestionFromQuiz(qid!, question);
     setQuiz(updatedQuiz);
     const updatedQuizzes = quizzes.map((q: { _id: any }) =>
       q._id === quiz._id ? updatedQuiz : q
