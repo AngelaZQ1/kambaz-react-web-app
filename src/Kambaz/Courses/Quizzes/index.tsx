@@ -1,4 +1,11 @@
-import { useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useEffect,
+} from "react";
 import { Button, Dropdown, ListGroup } from "react-bootstrap";
 import { BiPlus, BiSolidDownArrow } from "react-icons/bi";
 import { BsGripVertical } from "react-icons/bs";
@@ -21,21 +28,26 @@ export default function Quizzes() {
     const quizzes = await quizzesClient.getAllQuizzes(cid!);
     const currentDate = new Date();
 
-    const quizzesWithAvailability = quizzes.map((quiz) => {
-      const availableDate = new Date(quiz.availableDate);
-      const availableUntilDate = new Date(quiz.untilDate);
-      let availability = "Closed";
+    const quizzesWithAvailability = quizzes.map(
+      (quiz: {
+        availableDate: string | number | Date;
+        untilDate: string | number | Date;
+      }) => {
+        const availableDate = new Date(quiz.availableDate);
+        const availableUntilDate = new Date(quiz.untilDate);
+        let availability = "Closed";
 
-      if (currentDate < availableDate) {
-        availability = `Not available until ${availableDate.toLocaleString()}`;
-      } else if (
-        currentDate >= availableDate &&
-        currentDate <= availableUntilDate
-      ) {
-        availability = "Available";
+        if (currentDate < availableDate) {
+          availability = `Not available until ${availableDate.toLocaleString()}`;
+        } else if (
+          currentDate >= availableDate &&
+          currentDate <= availableUntilDate
+        ) {
+          availability = "Available";
+        }
+        return { ...quiz, availability };
       }
-      return { ...quiz, availability };
-    });
+    );
     dispatch(setQuizzes(quizzesWithAvailability));
   };
 
@@ -51,10 +63,10 @@ export default function Quizzes() {
   };
 
   const handleUnpublish = async (quizId: string) => {
-    const quiz = quizzes.find((quiz) => quiz._id === quizId);
+    const quiz = quizzes.find((quiz: { _id: string }) => quiz._id === quizId);
     if (quiz) {
       await quizzesClient.updateQuiz({ ...quiz, published: false });
-      const updatedQuizzes = quizzes.map((q) =>
+      const updatedQuizzes = quizzes.map((q: { _id: string }) =>
         q._id === quizId ? { ...quiz, published: false } : q
       );
       dispatch(setQuizzes(updatedQuizzes));
@@ -62,10 +74,10 @@ export default function Quizzes() {
   };
 
   const handlePublish = async (quizId: string) => {
-    const quiz = quizzes.find((quiz) => quiz._id === quizId);
+    const quiz = quizzes.find((quiz: { _id: string }) => quiz._id === quizId);
     if (quiz) {
       await quizzesClient.updateQuiz({ ...quiz, published: true });
-      const updatedQuizzes = quizzes.map((q) =>
+      const updatedQuizzes = quizzes.map((q: { _id: string }) =>
         q._id === quizId ? { ...quiz, published: true } : q
       );
       dispatch(setQuizzes(updatedQuizzes));
@@ -95,79 +107,99 @@ export default function Quizzes() {
         </h3>
       </div>
       <ListGroup className="rounded-0">
-        {quizzes.map((quiz) => (
-          <ListGroup.Item className="wd-assignment-list-item p-0 fs-5 border-gray d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center">
-              <BsGripVertical className="fs-3" />
-              <MdEditDocument color="green" className="fs-3 mx-3" />
-              <div className="mt-3">
-                <a
-                  onClick={() =>
-                    (window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)
-                  }
-                  className="wd-assignment-link fs-4 fw-bold text-decoration-none wd-fg-color-black"
-                >
-                  {quiz.title}
-                </a>
-                <p>
-                  {`${quiz.availability} | ${
-                    quiz.dueDate
-                      ? `Due ${new Date(quiz.dueDate)?.toLocaleString()}`
-                      : "No due date"
-                  } | ${quiz.points} pts | ${quiz.questions.length} questions`}
-                </p>
-              </div>
-            </div>
-            {isFaculty && (
+        {quizzes.map(
+          (quiz: {
+            _id: string;
+            title:
+              | string
+              | number
+              | boolean
+              | ReactElement<any, string | JSXElementConstructor<any>>
+              | Iterable<ReactNode>
+              | ReactPortal
+              | null
+              | undefined;
+            availability: any;
+            dueDate: string | number | Date;
+            points: any;
+            questions: string | any[];
+            published: any;
+          }) => (
+            <ListGroup.Item className="wd-assignment-list-item p-0 fs-5 border-gray d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center">
-                <FaCircleCheck
-                  className="float-end fs-3"
-                  color={quiz.published ? "green" : "gray"}
-                  onClick={() =>
-                    quiz.published
-                      ? handleUnpublish(quiz._id)
-                      : handlePublish(quiz._id)
-                  }
-                />
-                <Dropdown className="float-end me-2">
-                  <Dropdown.Toggle
-                    variant="ghost"
-                    size="lg"
-                    id="wd-quiz-actions-btn"
+                <BsGripVertical className="fs-3" />
+                <MdEditDocument color="green" className="fs-3 mx-3" />
+                <div className="mt-3">
+                  <a
+                    onClick={() =>
+                      (window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)
+                    }
+                    className="wd-assignment-link fs-4 fw-bold text-decoration-none wd-fg-color-black"
                   >
-                    <IoEllipsisVertical />
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      id="wd-edit-quiz"
-                      onClick={() =>
-                        (window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)
-                      }
-                    >
-                      Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      id="wd-delete-quiz"
-                      onClick={() => handleDelete(quiz._id)}
-                    >
-                      Delete
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      id="wd-publish-quiz"
-                      onClick={() =>
-                        quiz.published
-                          ? handleUnpublish(quiz._id)
-                          : handlePublish(quiz._id)
-                      }
-                    >
-                      {quiz.published ? "Unpublish" : "Publish"}
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                    {quiz.title}
+                  </a>
+                  <p>
+                    {`${quiz.availability} | ${
+                      quiz.dueDate
+                        ? `Due ${new Date(quiz.dueDate)?.toLocaleString()}`
+                        : "No due date"
+                    } | ${quiz.points} pts | ${
+                      quiz.questions.length
+                    } questions`}
+                  </p>
+                </div>
               </div>
-            )}
-          </ListGroup.Item>
-        ))}
+              {isFaculty && (
+                <div className="d-flex align-items-center">
+                  <FaCircleCheck
+                    className="float-end fs-3"
+                    color={quiz.published ? "green" : "gray"}
+                    onClick={() =>
+                      quiz.published
+                        ? handleUnpublish(quiz._id)
+                        : handlePublish(quiz._id)
+                    }
+                  />
+                  <Dropdown className="float-end me-2">
+                    <Dropdown.Toggle
+                      variant="ghost"
+                      size="lg"
+                      id="wd-quiz-actions-btn"
+                    >
+                      <IoEllipsisVertical />
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        id="wd-edit-quiz"
+                        onClick={() =>
+                          (window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}`)
+                        }
+                      >
+                        Edit
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        id="wd-delete-quiz"
+                        onClick={() => handleDelete(quiz._id)}
+                      >
+                        Delete
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        id="wd-publish-quiz"
+                        onClick={() =>
+                          quiz.published
+                            ? handleUnpublish(quiz._id)
+                            : handlePublish(quiz._id)
+                        }
+                      >
+                        {quiz.published ? "Unpublish" : "Publish"}
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              )}
+            </ListGroup.Item>
+          )
+        )}
       </ListGroup>
     </div>
   );
