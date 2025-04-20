@@ -14,7 +14,9 @@ export default function QuizDetails() {
         <div className="mb-5">
           <Button
             className="me-2"
-            onClick={() => alert("Previewing the quiz...")}
+            onClick={() =>
+              (window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${quiz._id}/preview`)
+            }
           >
             Preview
           </Button>
