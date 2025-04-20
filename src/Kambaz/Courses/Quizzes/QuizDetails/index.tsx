@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
@@ -6,8 +7,13 @@ export default function QuizDetails() {
   const { cid, qid } = useParams();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { quizzes } = useSelector((state: any) => state.quizzesReducer);
-  const quiz = quizzes.find((quiz) => quiz._id === qid);
+  const quiz = quizzes.find((quiz: { _id: string }) => quiz._id === qid);
 
+  const handleStartQuiz = () => {
+    if (currentUser.role === "STUDENT") {
+      window.location.href = `#/Kambaz/Courses/${cid}/Quizzes/${qid}/preview`;
+    }
+  };
   return (
     <div>
       {currentUser.role === "FACULTY" && (
@@ -46,54 +52,50 @@ export default function QuizDetails() {
         <strong>Time Limit:</strong> {quiz.timeLimit} Minutes
       </p>
       <p>
-        <strong>Multiple Attempts:</strong>{" "}
+        <strong>Multiple Attempts:</strong>
         {quiz.allowMultipleAttempts ? "Yes" : "No"}
       </p>
       <p>
         <strong>How Many Attempts:</strong> {quiz.numAllowedAttempts}
       </p>
       <p>
-        <strong>Show Correct Answers:</strong>{" "}
+        <strong>Show Correct Answers:</strong>
         {quiz.showCorrectAnswers || "Not specified"}
       </p>
       <p>
         <strong>Access Code:</strong> {quiz.accessCode || "None"}
       </p>
       <p>
-        <strong>One Question at a Time:</strong>{" "}
+        <strong>One Question at a Time:</strong>
         {quiz.oneQuestionAtATime ? "Yes" : "No"}
       </p>
       <p>
         <strong>Webcam Required:</strong> {quiz.webcamRequired ? "Yes" : "No"}
       </p>
       <p>
-        <strong>Lock Questions After Answering:</strong>{" "}
+        <strong>Lock Questions After Answering:</strong>
         {quiz.lockQuestionsAfterAnswering ? "Yes" : "No"}
       </p>
       <p>
-        <strong>Due:</strong>{" "}
+        <strong>Due:</strong>
         {quiz.dueDate
           ? new Date(quiz.dueDate).toLocaleString()
           : "Not specified"}
       </p>
       <p>
-        <strong>Available from:</strong>{" "}
+        <strong>Available from:</strong>
         {quiz.availableDate
           ? new Date(quiz.availableDate).toLocaleString()
           : "Not specified"}
       </p>
       <p>
-        <strong>Until:</strong>{" "}
+        <strong>Until:</strong>
         {quiz.untilDate
           ? new Date(quiz.untilDate).toLocaleString()
           : "Not specified"}
       </p>
       {currentUser.role === "STUDENT" && (
-        <Button
-          className="mt-5"
-          variant="danger"
-          onClick={() => alert("Starting the quiz...")}
-        >
+        <Button className="mt-5" variant="danger" onClick={handleStartQuiz}>
           Start Quiz
         </Button>
       )}

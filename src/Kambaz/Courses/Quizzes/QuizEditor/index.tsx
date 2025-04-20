@@ -64,7 +64,7 @@ export default function QuizEditor() {
       q._id === question._id ? question : q
     );
     const totalPoints = updatedQuestions.reduce(
-      (sum, q) => sum + (q.points || 0),
+      (sum: any, q: { points: any }) => sum + (q.points || 0),
       0
     );
     const updatedQuiz = {
@@ -181,11 +181,11 @@ export default function QuizEditor() {
             <label className="form-label">Multiple Attempts</label>
             <select
               className="form-select"
-              defaultValue={quiz?.multipleAttempts ? "Yes" : "No"}
+              defaultValue={quiz?.allowMultipleAttempts ? "Yes" : "No"}
               onChange={(e) =>
                 setQuiz({
                   ...quiz,
-                  multipleAttempts: e.target.value === "Yes",
+                  allowMultipleAttempts: e.target.value === "Yes",
                 })
               }
             >
@@ -193,6 +193,23 @@ export default function QuizEditor() {
               <option value="Yes">Yes</option>
             </select>
           </div>
+          {quiz.allowMultipleAttempts && (
+            <div className="mb-2">
+              <label className="form-label">Allowed Attempts</label>
+              <input
+                type="number"
+                className="form-control"
+                min={1}
+                defaultValue={quiz?.numAllowedAttempts || 1}
+                onChange={(e) =>
+                  setQuiz({
+                    ...quiz,
+                    numAllowedAttempts: parseInt(e.target.value, 10),
+                  })
+                }
+              />
+            </div>
+          )}
           <div className="mb-2">
             <label className="form-label">Show Correct Answers</label>
             <select
