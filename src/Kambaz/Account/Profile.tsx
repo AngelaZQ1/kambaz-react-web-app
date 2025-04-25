@@ -12,8 +12,8 @@ export default function Profile() {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const updateProfile = async () => {
-    const updatedProfile = await client.updateUser(profile);
-    dispatch(setCurrentUser(updatedProfile));
+    await client.updateUser(profile);
+    dispatch(setCurrentUser(profile));
   };
   const fetchProfile = () => {
     if (!currentUser) return navigate("/Kambaz/Account/Signin");
@@ -79,6 +79,7 @@ export default function Profile() {
           />
           <select
             onChange={(e) => setProfile({ ...profile, role: e.target.value })}
+            value={profile.role}
             className="form-control mb-2"
             id="wd-role"
           >
