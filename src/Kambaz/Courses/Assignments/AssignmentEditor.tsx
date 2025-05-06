@@ -1,6 +1,40 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import * as assignmentsClient from "./client";
+import { addAssignment, updateAssignment } from "./reducer";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+
+  const dispatch = useDispatch();
+  const [assignment, setAssignment] = useState(
+    assignments.find(
+      (assignment: { _id: string | undefined }) => assignment._id === aid
+    )
+  );
+
+  const handleSave = async () => {
+    if (assignment.course) {
+      await assignmentsClient.updateAssignment(assignment);
+      dispatch(updateAssignment(assignment));
+    } else {
+      const newAssignment = await assignmentsClient.createAssignment(
+        {
+          ...assignment,
+          available_date: new Date(assignment.available_from),
+          due_date: new Date(assignment.due_date),
+        },
+        cid as string
+      );
+      dispatch(addAssignment(newAssignment));
+    }
+    window.history.back();
+  };
+
   return (
     <>
       <div
@@ -8,14 +42,20 @@ export default function AssignmentEditor() {
         className="d-flex flex-column align-items-end w-75"
       >
         <Form.Label>Assignment Name</Form.Label>
-        <Form.Control placeholder="A1 - ENV + HTML" />
-        <textarea id="wd-description" className="mt-3">
-          The assignment is available online Submit a link to the landing page
-          of your Web application running on Netlify. The landing page should
-          include the following: - Your full name and section - Links to each of
-          the lab assignments - Link to the Kanbas application - Links to all
-          relevant source code repositories The Kanbas application should
-          include a link to navigate back to the landing page.
+        <Form.Control
+          placeholder={assignment?.title}
+          onChange={(e) =>
+            setAssignment({ ...assignment, title: e.target.value })
+          }
+        />
+        <textarea
+          id="wd-description"
+          className="mt-3"
+          onChange={(e) =>
+            setAssignment({ ...assignment, description: e.target.value })
+          }
+        >
+          {assignment?.description}
         </textarea>
         <br />
         <div className="w-75">
@@ -24,7 +64,14 @@ export default function AssignmentEditor() {
             className="mt-3 d-flex justify-content-end gap-2 align-items-center"
           >
             <Form.Label className="">Points</Form.Label>
-            <Form.Control type="number" className="w-100" />
+            <Form.Control
+              type="number"
+              className="w-100"
+              value={assignment?.points}
+              onChange={(e) =>
+                setAssignment({ ...assignment, points: e.target.value })
+              }
+            />
           </Form.Group>
           <Form.Group
             controlId="wd-group"
@@ -101,20 +148,44 @@ export default function AssignmentEditor() {
             <Form.Label className="me-2">
               <b>Due</b>
             </Form.Label>
-            <Form.Control type="date" className="w-100" />
+            <Form.Control
+              type="date"
+              className="w-100"
+              value={assignment?.due_date}
+              onChange={(e) =>
+                setAssignment({ ...assignment, due_date: e.target.value })
+              }
+            />
           </Form.Group>
           <Form.Group className="mt-3 d-flex justify-content-end gap-2 align-items-center">
             <div className="me-3">
               <Form.Label className="me-2">
                 <b>Available From</b>
               </Form.Label>
-              <Form.Control type="date" />
+              <Form.Control
+                type="date"
+                value={assignment?.available_date}
+                onChange={(e) =>
+                  setAssignment({
+                    ...assignment,
+                    available_from: e.target.value,
+                  })
+                }
+              />
             </div>
             <div>
               <Form.Label className="me-2">
                 <b>Until</b>
               </Form.Label>
-              <Form.Control type="date" />
+              <Form.Control
+                type="date"
+                onChange={(e) =>
+                  setAssignment({
+                    ...assignment,
+                    available_to: e.target.value,
+                  })
+                }
+              />
             </div>
           </Form.Group>
         </div>
@@ -122,8 +193,15 @@ export default function AssignmentEditor() {
         <br />
         <hr />
         <div className="d-flex justify-content-end">
-          <Button className="btn-secondary me-2">Cancel</Button>
-          <Button variant="danger">Save</Button>
+          <Button
+            className="btn-secondary me-2"
+            onClick={() => window.history.back()}
+          >
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleSave}>
+            Save
+          </Button>
         </div>
       </div>
     </>
